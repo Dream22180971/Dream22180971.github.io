@@ -1,0 +1,661 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="这是一篇文章">
+  <meta name="author" content="Dreamer">
+  <meta name="keywords" content="HTML,CSS,JavaScript,JQuery,React,Vue.js等">
+  <meta name="description" content="这是一篇文章">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【软测入门】第2章  测试过程">
+<meta property="og:url" content="http://example.com/2023/03/16/%E3%80%90%E8%BD%AF%E6%B5%8B%E5%85%A5%E9%97%A8%E3%80%91%E7%AC%AC2%E7%AB%A0%20%20%E6%B5%8B%E8%AF%95%E8%BF%87%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Dreamers&#39;Blog">
+<meta property="og:description" content="这是一篇文章">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="c:/Users/Qiaoh/AppData/Roaming/Typora/typora-user-images/image-20230218203522861.png">
+<meta property="og:image" content="c:/Users/Qiaoh/AppData/Roaming/Typora/typora-user-images/image-20230218205108011.png">
+<meta property="og:image" content="c:/Users/Qiaoh/AppData/Roaming/Typora/typora-user-images/image-20230218205616020.png">
+<meta property="og:image" content="c:/Users/Qiaoh/AppData/Roaming/Typora/typora-user-images/image-20230218210734462.png">
+<meta property="article:published_time" content="2023-03-16T14:58:16.000Z">
+<meta property="article:modified_time" content="2023-03-16T15:01:27.730Z">
+<meta property="article:author" content="Dreamer">
+<meta property="article:tag" content="软件测试">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="c:/Users/Qiaoh/AppData/Roaming/Typora/typora-user-images/image-20230218203522861.png">
+  
+  <title>【软测入门】第2章  测试过程 - Dreamers&#39;Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+  
+<link rel="stylesheet" href="/css/iconfont_more/iconfont.css">
+<link rel="stylesheet" href="/css/iconfont_fenlei/iconfont.css">
+<link rel="stylesheet" href="/css/iconfont_biaoqian/iconfont.css">
+<link rel="stylesheet" href="/css/iconfont_user/iconfont.css">
+<link rel="stylesheet" href="/css/iconfont_liuyan/iconfont.css">
+<link rel="stylesheet" href="/css/iconfont_guidang/iconfont.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":80,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>白日梦想家</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive4"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-fenlei"></i>
+                分类
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/">
+                    
+                    技术
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/">
+                    
+                    日记
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/">
+                    
+                    杂谈
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-biaoqian4"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-liuyan"></i>
+                留言
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/links/">
+                    <i class="iconfont icon-link-fill"></i>
+                    友链
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-more"></i>
+                更多
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/more/%E9%98%BF%E9%87%8C%E4%BA%91%E7%9B%98%E8%B5%84%E6%BA%90">
+                    
+                    阿里云盘资源
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/">
+                    
+                    测试中
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/">
+                    
+                    测试中
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/articlebg.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="【软测入门】第2章  测试过程">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Dreamer
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2023-03-16 22:58" pubdate>
+        2023年3月16日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.4k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      7 分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">【软测入门】第2章  测试过程</h1>
+            
+            <div class="markdown-body">
+              <hr>
+<h2 id="2-1-软件测试阶段"><a href="#2-1-软件测试阶段" class="headerlink" title="2.1 软件测试阶段"></a>2.1 软件测试阶段</h2><p><img src="C:\Users\Qiaoh\AppData\Roaming\Typora\typora-user-images\image-20230218203522861.png" srcset="/img/loading.gif" lazyload alt="image-20230218203522861"></p>
+<p><strong>验收测试</strong></p>
+<p><strong>1．α测试</strong></p>
+<p>　　α测试是用户在开发环境下进行的测试，也可以是开发机构内部的用户在模拟环境下进行的测试。α测试中，软件在一个自然状态下使用。开发者坐在用户旁，随时记下错误和使用中的问题。这是在受控制的环境下进行的测试。α测试的目的主要是评价软件产品的功能、局域化、可用性、可靠性、性能、支持性（Function，Localization，Usability，Reliability，Performance，Support，FLURPS），尤其注重产品的界面和特色。α测试人员是除产品研发人员之外最早见到产品的人，他们提出的功能和修改建议是很有价值的。</p>
+<p><strong>2．β测试</strong></p>
+<p>　　β测试是软件的多个用户在一个或多个用户的实际使用环境下进行的测试。这些用户是与公司签订了支持产品预发行合同的外部用户，他们要求使用该产品，并愿意返回所有错误信息给开发者。与α测试不同的是，在进行β测试时，开发者通常不在测试现场。因而，β测试是在开发者无法控制的环境下进行的软件现场应用。</p>
+<p>　　在β测试中，由用户<a href="javascript:;"><strong>记录</strong></a>下遇到的所有问题，包括真的和主观认定的，定期向开发者报告；开发者在综合用户的报告后做出修改，再将软件产品交付给全体用户使用。</p>
+<p><strong>单元测试、集成测试、系统测试的比较</strong></p>
+<p><img src="C:\Users\Qiaoh\AppData\Roaming\Typora\typora-user-images\image-20230218205108011.png" srcset="/img/loading.gif" lazyload alt="image-20230218205108011"></p>
+<p><strong>回归测试</strong></p>
+<p>在测试或其他活动中发现的缺陷经过修改后，应该对软件进行回归测试。回归测试的目的是验证缺陷得到了正确的修复，同时对系统的变更没有影响到以前的功能。回归测试可以发生在任何一个阶段，包括单元测试、集成测试、系统测试。</p>
+<p><img src="C:\Users\Qiaoh\AppData\Roaming\Typora\typora-user-images\image-20230218205616020.png" srcset="/img/loading.gif" lazyload alt="image-20230218205616020"></p>
+<p><strong>1．回归测试的策略</strong></p>
+<p>　　如果回归测试需要考虑如何选择重新执行的测试用例，就要确定回归测试的策略。常见的回归测试策略如下。</p>
+<p>　　●完全重复测试：重新执行所有在前期测试阶段建立的测试用例，以确认问题修改的正确性和修改的局部影响性。</p>
+<p>　　●选择性重复测试：选择性地重新执行部分在前期测试阶段建立的测试用例，以测试被修改的程序。具体细分如下。</p>
+<p>　　■覆盖修改法：针对被修改的部分，选取或重新构造测试用例以验证没有错误再次发生的用例选择方法。也就是说，这类回归测试仅根据修改的内容来选择测试用例，这部分测试用例仅保证修改的缺陷或新增的功能实现了。这种方法的效率是最高的，但风险是最大的，因为它无法保证这个修改是否影响了其他功能。在进度压力很大或者系统结构设计耦合性很小的状态下，可以使用该方法。</p>
+<p>　　■周边影响法：不但要包含覆盖修改法确定的用例，还需要分析修改的扩散影响，对于那些受到修改间接影响的部分，选择测试用例以验证它没有受到不良影响。该方法比覆盖修改法更充分。这类回归测试需要分析当前的修改可能影响到哪部分代码或功能，对于所有受影响的功能和代码，对应的所有测试用例都将被回归。如何判断哪些功能或代码受影响依赖于开发过程的规范性和测试分析人员（或开发人员）的经验。对于开发过程有详细的需求跟踪矩阵的项目而言，在矩阵中分析修改功能所波及的代码区域或其他功能是比较简单的，同时有经验的开发人员和测试人员能够有效地找出受影响的功能或代码；对于单元测试而言，修改代码之后，还需要考虑对一些公共内容的影响，如全局变量、输入&#x2F;输出接口、配置文件等。该方法是业界推荐的方法，适合于一般项目。</p>
+<p>　　■指标达成方法：一种类似于单元测试的方法，在重新执行测试前，先确定一个要达成的指标，如完全覆盖修改部分的代码、覆盖与修改有关的60%的接口等，基于这种要求，选择一个最小的测试用例集合。</p>
+<p>　　<strong>2．回归测试流程</strong></p>
+<p>　　回归测试也需要有流程，可参考如下流程。</p>
+<p>　　（1）在测试策略制定阶段，制定回归测试策略。</p>
+<p>　　（2）确定需要回归测试的版本。</p>
+<p>　　（3）发布回归测试版本，按照回归测试策略执行回归测试。</p>
+<p>　　（4）若回归测试通过，关闭缺陷跟踪单（问题单）。</p>
+<p>　　（5）若回归测试不通过，把缺陷跟踪单返回开发人员，开发人员重新修改问题，再次提交测试人员，进行回归测试。</p>
+<p>　　<strong>3．回归测试的自动化</strong></p>
+<p>　　回归测试是一个重用以前成果的测试，很难预料到要经过多少次回归系统才能达到满意的水平，因此，回归测试将可能演变成一种重复的、令人心烦意乱的工作，效果与人员的积极性将大打折扣。于是，回归测试的自动化非常重要。</p>
+<p>　　回归测试的自动化包括测试程序的自动运行、自动配置，测试用例的管理和自动输入，测试的自动执行，测试信息与结果的自动采集，测试结果的自动比较和结论（尤其前面提到的各类数据的共享决策）的自动输出。</p>
+<p>　　对于系统测试功能比较简单、测试界面相对稳定并且测试用例良好的测试来说，采用“捕捉回放”工具是比较合适的，这类工具有<a href="javascript:;"><strong>QTP</strong></a>、Robot Framework、<a href="javascript:;"><strong>Selenium</strong></a>等。为了实现测试用例的自动化并实现测试结果的自动判断，脚本化的并且包含控制结构和内部实现结果判断的测试用例是唯一的选择，此类脚本语言有<a href="javascript:;"><strong>Python</strong></a>、<a href="javascript:;"><strong>Ruby</strong></a>、Java等。</p>
+<p>　　对于特定系统中复杂的测试来说，如果没有通用的商用工具可供选择，可以尝试开发专用的<a href="javascript:;"><strong>自动化测试</strong></a>工具。</p>
+<p>　　回归测试的自动化（或者说工具化）是一个需要尽早考虑的问题，在确定测试方案时就要考虑这种可能性，必要时应投入资源进行开发，形成可供继承与推广的工具则是最终目的。</p>
+<hr>
+<h2 id="2-2-测试过程模型"><a href="#2-2-测试过程模型" class="headerlink" title="2.2 测试过程模型"></a>2.2 测试过程模型</h2><p><strong>CMM（能力成熟度模型）</strong></p>
+<p>角色（role）入口准则（entry criteria）输入（input）活动（activity）输出（output）出口准则（exit criteria）</p>
+<p>评审和审计（review and audit）可管理和受控的工作产品（work product managed and controlled）</p>
+<p>测量（measurement）书面规程（documented procedure）培训（training）工具（tool）</p>
+<p><strong>双V模型</strong></p>
+<p><img src="C:\Users\Qiaoh\AppData\Roaming\Typora\typora-user-images\image-20230218210734462.png" srcset="/img/loading.gif" lazyload alt="image-20230218210734462"></p>
+<hr>
+<h2 id="2-3-软件开发与测试过中各环节的任务、角色及其职责"><a href="#2-3-软件开发与测试过中各环节的任务、角色及其职责" class="headerlink" title="2.3 软件开发与测试过中各环节的任务、角色及其职责"></a>2.3 软件开发与测试过中各环节的任务、角色及其职责</h2><figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">项目经理<br>开发工程师<br>测试工程师<br>开发经理<br>测试经理<br>质量保证人员QA<br>变更控制委员会CCB<br></code></pre></div></td></tr></table></figure>
+
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%8A%80%E6%9C%AF/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95/">软件测试</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95/">软件测试</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    版权声明：本博客所有文章均为作者原创，除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/03/16/%E3%80%90%E8%BD%AF%E6%B5%8B%E5%85%A5%E9%97%A8%E3%80%91%E7%AC%AC1%E7%AB%A0%20%20%E6%B5%8B%E8%AF%95%E7%9A%84%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+                        <span class="hidden-mobile">【软测入门】第1章  测试的基础知识</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+    Copyright&nbsp;&copy;2021 |
+    by&nbsp;<a href="/about" target="_blank">Dreamer</a>
+    |&nbsp; <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+  
+  <!-- 新增底部运行时间 -->
+  <div class="footer-content">
+  <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+  <script>
+    var now = new Date();
+    function createtime() {
+      var grt= new Date("09/01/2021 12:00:00");//此处修改你的建站时间或者网站上线时间
+      now.setTime(now.getTime()+250);
+      days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+      hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+      if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+      mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+      seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+      snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+      document.getElementById("timeDate").innerHTML = "本站已在梦境中遨游了 "+dnum+" 天 ";
+      document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+    setInterval("createtime()",250);
+  </script>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/wallleap/cdn@latest/js/hititle.js"></script>
+
+<script src="https://cdn.jsdelivr.net/gh/wallleap/cdn/js/noSomeKey.js"></script>
+
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
