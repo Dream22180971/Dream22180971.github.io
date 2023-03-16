@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+  
+  <entry>
+    <title>如何利用Hexo搭建本博客平台</title>
+    <link href="/2021/10/01/%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8Hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
+    <url>/2021/10/01/%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8Hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
+    
+    <content type="html"><![CDATA[<h2 id="如何搭建本博客平台-Hexo-Github"><a href="#如何搭建本博客平台-Hexo-Github" class="headerlink" title="如何搭建本博客平台 Hexo+Github"></a>如何搭建本博客平台 Hexo+Github</h2><h3 id="一、Hexo是什么？"><a href="#一、Hexo是什么？" class="headerlink" title="一、Hexo是什么？"></a>一、Hexo是什么？</h3><p><a href="https://hexo.io/zh-cn/">Hexo</a>是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown 或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。即把用户的markdown文件，按照指定的主题解析成静态网页。</p><h3 id="二、为什么选择Hexo搭建博客？"><a href="#二、为什么选择Hexo搭建博客？" class="headerlink" title="二、为什么选择Hexo搭建博客？"></a>二、为什么选择Hexo搭建博客？</h3><p>建立这个博客的时间是21年9月份，正值考研的强化阶段，我在网上刷着帖子看到相关搭建博客的文章，就突然脑子一热，我也想拥有一个个人的博客平台网站，于是就花了3天时间在图书馆利用复习娱乐时间搞了一下。选择使用它主要也是因为操作简单，后期维护也不是很麻烦，还能发发自己的小吐槽，挺好。</p><h3 id="三、怎么从0到1搭建Hexo博客？"><a href="#三、怎么从0到1搭建Hexo博客？" class="headerlink" title="三、怎么从0到1搭建Hexo博客？"></a>三、怎么从0到1搭建Hexo博客？</h3><p>首先，我参考了B站上一个up的视频，堪称保姆级，对于入门小白来说，确实是跟着操作就好了。视频指路👉<a href="https://www.bilibili.com/video/BV1mU4y1j72n?share_source=copy_web%5D">点这里</a>。看完视频之后我了解了大致的搭建步骤。这里放入<a href="https://hexo.io/zh-cn/docs/">官方文档</a>作为首要参考，一切以文档为主。</p><h5 id="1-安装Node-js"><a href="#1-安装Node-js" class="headerlink" title="1.安装Node.js"></a>1.安装Node.js</h5><p>这个工具我课程里面因为用到过所以已经安装好了，没有的小伙伴的可以参考这篇文章进行安装及环境配置。指路👉<a href="https://blog.csdn.net/weixin_52799373/article/details/123840137">点这里</a>。</p><h5 id="2-安装Git"><a href="#2-安装Git" class="headerlink" title="2.安装Git"></a>2.安装Git</h5><p>下载及安装配置参考文章，指路👉<a href="https://blog.csdn.net/qq_57389560/article/details/124637026">点这里</a>。</p><h5 id="3-安装Hexo"><a href="#3-安装Hexo" class="headerlink" title="3.安装Hexo"></a>3.安装Hexo</h5><p>所有必备的应用程序安装完成后，即可使用 npm 安装 Hexo。</p><figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk"><span class="hljs-regexp">//</span>在文件夹里面鼠标右键Git Bash here，输入以下命令<br>$ npm install -g hexo-cli<br></code></pre></div></td></tr></table></figure><h5 id="4-初始化Hexo"><a href="#4-初始化Hexo" class="headerlink" title="4.初始化Hexo"></a>4.初始化Hexo</h5><figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk"><span class="hljs-regexp">//</span>在想要生成博客的一个空文件夹里面输入以下命令，进行初始化<br>hexo init<br></code></pre></div></td></tr></table></figure><p>随即空文件夹会自动生成初始化的内容文件，结构如图所示</p><p><img src="https://img.tujidu.com/image/6281f2c878f62.jpg" alt="初始化结构图"></p><p>到这里，其实本地化的Hexo页面其实已经生成了，下面来测试一下。</p><figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk"><span class="hljs-regexp">//</span>输入以下命令打开本地服务器，静态生成本地博客<br>hexo s <br></code></pre></div></td></tr></table></figure><p>然后在浏览器输入以下地址,即可访问最初的Hexo页面。</p><figure class="highlight apache"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs apache"><span class="hljs-attribute">localhost</span>:<span class="hljs-number">4000</span><br></code></pre></div></td></tr></table></figure><p><img src="https://img.tujidu.com/images/2023/03/15/6411dbf4150c9.png" alt="初始化页面"></p><p>这也其实就搭建好了，然后的话就是上传到Github或Gitee服务器。后续更新…</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>技术</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Hexo</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  
+</search>
