@@ -1,7 +1,7 @@
-
+﻿
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
+<html lang="zh-CN" data-default-color-scheme=auto scroll-behavior="smooth">
 
 
 
@@ -11,6 +11,11 @@
   <link rel="icon" href="/img/favicon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <!-- Preconnect to CDN domains -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <!-- Preload critical resources -->
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/css/bootstrap.min.css" as="style">
+  <link rel="preload" href="/css/main.css" as="style">
   
   <meta name="theme-color" content="#2f4154">
   <meta name="description" content=" 博客新开张,正在更新中,分享生活,分享知识 ">
@@ -36,7 +41,7 @@
   
   <title>关于 - Dreamers&#39;Blog</title>
 
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/css/bootstrap.min.css" />
 
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
@@ -102,7 +107,7 @@
 
     <!-- Collapsible content -->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
+      <ul class="navbar-nav mx-auto text-center">
         
           
           
@@ -300,7 +305,7 @@
           >
           
             <div class="about-avatar">
-              <img src="/img/avatar.jpg" srcset="/img/loading.gif" lazyload
+              <img src="/img/avatar.jpg" srcset="/img/loading.gif" lazyload loading="lazy"
                    class="img-fluid" alt="avatar">
             </div>
           
@@ -313,47 +318,6 @@
   <div class="about-info">
     <div class="about-name">白日梦想家</div>
     <div class="about-intro">欢迎来到我的博客...</div>
-    <div class="about-icons">
-      
-        
-        
-        
-        <a href=https://github.com/Dream22180971 class="
-           hint--bottom hint--rounded"
-           aria-label=GitHub
-           target="_blank"
-        >
-          <i class="iconfont icon-github-fill" aria-hidden="true"></i>
-          
-        </a>
-      
-        
-        
-        
-        <a href=/ class="
-           hint--bottom hint--rounded"
-           aria-label=3310103904
-           target="_blank"
-        >
-          <i class="iconfont icon-qq-fill" aria-hidden="true"></i>
-          
-        </a>
-      
-        
-        
-        
-        <a  class="qr-trigger
-           "
-           
-           target="_self"
-        >
-          <i class="iconfont icon-wechat-fill" aria-hidden="true"></i>
-          
-            <img class="qr-img" src="/img/erweima.jpg" srcset="/img/loading.gif" lazyload alt="qrcode" />
-          
-        </a>
-      
-    </div>
   </div>
 </div>
 
@@ -362,8 +326,8 @@
     <p class="note note-success"><strong>一些信息</strong></p>
 
 <p>🔴博主：<b>白日梦想家</b></p>
-<p>🟠学历：不知名本科 计算机小菜鸡</p>
-<p>🟡感兴趣的技术栈：Web 前端 | Java后端 | Python | 在学软件测试</p>
+<p>🟠学历：本科</p>
+<p>🟡职业：软件测试自动化工程师</p>
 <p>🟤喜欢喧嚣，也爱独处；有空时读书，心烦时跑步。</p>
 <br>
 
@@ -494,8 +458,8 @@
 
   <!-- SCRIPTS -->
   
-  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
 
   <script>
     NProgress.configure({"showSpinner":false,"trickleSpeed":100})
@@ -507,7 +471,7 @@
 
 
 <script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
-<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/js/bootstrap.bundle.min.js" ></script>
 <script  src="/js/events.js" ></script>
 <script  src="/js/plugins.js" ></script>
 
@@ -532,7 +496,7 @@
 
 
 
-  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js" ></script>
 
 
 
@@ -545,7 +509,7 @@
 
 
 
-  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/lib/typed.min.js" ></script>
   <script>
     (function (window, document) {
       var typing = Fluid.plugins.typing;
@@ -576,3 +540,11 @@
 
 </body>
 </html>
+
+
+
+
+
+
+
+

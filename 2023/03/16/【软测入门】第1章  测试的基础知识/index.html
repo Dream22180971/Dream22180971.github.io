@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
+<html lang="zh-CN" data-default-color-scheme=auto scroll-behavior="smooth">
 
 
 
@@ -11,6 +11,11 @@
   <link rel="icon" href="/img/favicon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <!-- Preconnect to CDN domains -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <!-- Preload critical resources -->
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/css/bootstrap.min.css" as="style">
+  <link rel="preload" href="/css/main.css" as="style">
   
   <meta name="theme-color" content="#2f4154">
   <meta name="description" content="这是一篇文章">
@@ -43,7 +48,7 @@
   
   <title>【软测入门】第1章  测试的基础知识 - Dreamers&#39;Blog</title>
 
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/css/bootstrap.min.css" />
 
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
@@ -111,7 +116,7 @@
 
     <!-- Collapsible content -->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
+      <ul class="navbar-nav mx-auto text-center">
         
           
           
@@ -289,6 +294,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
+            <h1 class="h1">【软测入门】第1章 测试的基础知识</h1>
             <span class="h2" id="subtitle" title="【软测入门】第1章  测试的基础知识">
               
             </span>
@@ -377,20 +383,20 @@
 <figure class="highlight"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs">软件开发组：包括开发经理、分析人员、设计人员、开发人员<br>软件测试组：包括测试经理、测试人员<br>配置管理组：包括配置经理、配置管理员<br></code></pre></div></td></tr></table></figure>
 
 <p><strong>流程</strong></p>
-<h3 id="1-瀑布模型"><a href="#1-瀑布模型" class="headerlink" title="1.瀑布模型"></a>1.瀑布模型</h3><p><img src="C:\Users\Qiaoh\AppData\Roaming\Typora\typora-user-images\image-20230218142202506.png" srcset="/img/loading.gif" lazyload alt="image-20230218142202506"></p>
-<h3 id="2-螺旋模型"><a href="#2-螺旋模型" class="headerlink" title="2.螺旋模型"></a>2.螺旋模型</h3><p><img src="C:\Users\Qiaoh\AppData\Roaming\Typora\typora-user-images\image-20230218142444829.png" srcset="/img/loading.gif" lazyload alt="image-20230218142444829"></p>
-<h3 id="3-V模型"><a href="#3-V模型" class="headerlink" title="3.V模型"></a>3.V模型</h3><p><img src="C:\Users\Qiaoh\AppData\Roaming\Typora\typora-user-images\image-20230218142538396.png" srcset="/img/loading.gif" lazyload alt="image-20230218142538396"></p>
-<h3 id="4-W模型"><a href="#4-W模型" class="headerlink" title="4.W模型"></a>4.W模型</h3><p><img src="C:\Users\Qiaoh\AppData\Roaming\Typora\typora-user-images\image-20230218142647410.png" srcset="/img/loading.gif" lazyload alt="image-20230218142647410"></p>
-<h2 id="1-5-软件中出现缺陷的原因"><a href="#1-5-软件中出现缺陷的原因" class="headerlink" title="1.5 软件中出现缺陷的原因"></a>1.5 软件中出现缺陷的原因</h2><p><img src="C:\Users\Qiaoh\AppData\Roaming\Typora\typora-user-images\image-20230218144058255.png" srcset="/img/loading.gif" lazyload alt="image-20230218144058255"></p>
+<h3 id="1-瀑布模型"><a href="#1-瀑布模型" class="headerlink" title="1.瀑布模型"></a>1.瀑布模型</h3><p><img src="C:\Users\Qiaoh\AppData\Roaming\Typora\typora-user-images\image-20230218142202506.png" srcset="/img/loading.gif" lazyload loading="lazy" alt="image-20230218142202506"></p>
+<h3 id="2-螺旋模型"><a href="#2-螺旋模型" class="headerlink" title="2.螺旋模型"></a>2.螺旋模型</h3><p><img src="C:\Users\Qiaoh\AppData\Roaming\Typora\typora-user-images\image-20230218142444829.png" srcset="/img/loading.gif" lazyload loading="lazy" alt="image-20230218142444829"></p>
+<h3 id="3-V模型"><a href="#3-V模型" class="headerlink" title="3.V模型"></a>3.V模型</h3><p><img src="C:\Users\Qiaoh\AppData\Roaming\Typora\typora-user-images\image-20230218142538396.png" srcset="/img/loading.gif" lazyload loading="lazy" alt="image-20230218142538396"></p>
+<h3 id="4-W模型"><a href="#4-W模型" class="headerlink" title="4.W模型"></a>4.W模型</h3><p><img src="C:\Users\Qiaoh\AppData\Roaming\Typora\typora-user-images\image-20230218142647410.png" srcset="/img/loading.gif" lazyload loading="lazy" alt="image-20230218142647410"></p>
+<h2 id="1-5-软件中出现缺陷的原因"><a href="#1-5-软件中出现缺陷的原因" class="headerlink" title="1.5 软件中出现缺陷的原因"></a>1.5 软件中出现缺陷的原因</h2><p><img src="C:\Users\Qiaoh\AppData\Roaming\Typora\typora-user-images\image-20230218144058255.png" srcset="/img/loading.gif" lazyload loading="lazy" alt="image-20230218144058255"></p>
 <h2 id="1-6-软件缺陷的类型、严重性、优先级"><a href="#1-6-软件缺陷的类型、严重性、优先级" class="headerlink" title="1.6 软件缺陷的类型、严重性、优先级"></a>1.6 软件缺陷的类型、严重性、优先级</h2><p><strong>软件缺陷类型</strong></p>
-<p><img src="C:\Users\Qiaoh\AppData\Roaming\Typora\typora-user-images\image-20230218144830290.png" srcset="/img/loading.gif" lazyload alt="image-20230218144830290"></p>
+<p><img src="C:\Users\Qiaoh\AppData\Roaming\Typora\typora-user-images\image-20230218144830290.png" srcset="/img/loading.gif" lazyload loading="lazy" alt="image-20230218144830290"></p>
 <h3 id="软件缺陷的严重性和优先级"><a href="#软件缺陷的严重性和优先级" class="headerlink" title="软件缺陷的严重性和优先级"></a><strong>软件缺陷的严重性和优先级</strong></h3><p><strong>严重性</strong></p>
-<p><img src="C:\Users\Qiaoh\AppData\Roaming\Typora\typora-user-images\image-20230218145741942.png" srcset="/img/loading.gif" lazyload alt="image-20230218145741942"></p>
+<p><img src="C:\Users\Qiaoh\AppData\Roaming\Typora\typora-user-images\image-20230218145741942.png" srcset="/img/loading.gif" lazyload loading="lazy" alt="image-20230218145741942"></p>
 <p><strong>优先级</strong></p>
-<p><img src="C:\Users\Qiaoh\AppData\Roaming\Typora\typora-user-images\image-20230218150307723.png" srcset="/img/loading.gif" lazyload alt="image-20230218150307723"></p>
-<h2 id="1-7-测试用例的定义"><a href="#1-7-测试用例的定义" class="headerlink" title="1.7 测试用例的定义"></a>1.7 测试用例的定义</h2><p><img src="C:\Users\Qiaoh\AppData\Roaming\Typora\typora-user-images\image-20230218150611528.png" srcset="/img/loading.gif" lazyload alt="image-20230218150611528"></p>
-<h2 id="1-8-测试执行的定义"><a href="#1-8-测试执行的定义" class="headerlink" title="1.8 测试执行的定义"></a>1.8 测试执行的定义</h2><p><img src="C:\Users\Qiaoh\AppData\Roaming\Typora\typora-user-images\image-20230218151455475.png" srcset="/img/loading.gif" lazyload alt="image-20230218151455475"></p>
-<h2 id="1-9-软测工程师的主要工作"><a href="#1-9-软测工程师的主要工作" class="headerlink" title="1.9 软测工程师的主要工作"></a>1.9 软测工程师的主要工作</h2><p><img src="C:\Users\Qiaoh\AppData\Roaming\Typora\typora-user-images\image-20230218151957211.png" srcset="/img/loading.gif" lazyload alt="image-20230218151957211"></p>
+<p><img src="C:\Users\Qiaoh\AppData\Roaming\Typora\typora-user-images\image-20230218150307723.png" srcset="/img/loading.gif" lazyload loading="lazy" alt="image-20230218150307723"></p>
+<h2 id="1-7-测试用例的定义"><a href="#1-7-测试用例的定义" class="headerlink" title="1.7 测试用例的定义"></a>1.7 测试用例的定义</h2><p><img src="C:\Users\Qiaoh\AppData\Roaming\Typora\typora-user-images\image-20230218150611528.png" srcset="/img/loading.gif" lazyload loading="lazy" alt="image-20230218150611528"></p>
+<h2 id="1-8-测试执行的定义"><a href="#1-8-测试执行的定义" class="headerlink" title="1.8 测试执行的定义"></a>1.8 测试执行的定义</h2><p><img src="C:\Users\Qiaoh\AppData\Roaming\Typora\typora-user-images\image-20230218151455475.png" srcset="/img/loading.gif" lazyload loading="lazy" alt="image-20230218151455475"></p>
+<h2 id="1-9-软测工程师的主要工作"><a href="#1-9-软测工程师的主要工作" class="headerlink" title="1.9 软测工程师的主要工作"></a>1.9 软测工程师的主要工作</h2><p><img src="C:\Users\Qiaoh\AppData\Roaming\Typora\typora-user-images\image-20230218151957211.png" srcset="/img/loading.gif" lazyload loading="lazy" alt="image-20230218151957211"></p>
 <hr>
 <p>未完待续..</p>
 
@@ -571,8 +577,8 @@
 
   <!-- SCRIPTS -->
   
-  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
 
   <script>
     NProgress.configure({"showSpinner":false,"trickleSpeed":100})
@@ -584,7 +590,7 @@
 
 
 <script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
-<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/js/bootstrap.bundle.min.js" ></script>
 <script  src="/js/events.js" ></script>
 <script  src="/js/plugins.js" ></script>
 
@@ -613,7 +619,7 @@
 
 
 
-  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js" ></script>
 
 
 
@@ -626,7 +632,7 @@
 
 
 
-  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/lib/typed.min.js" ></script>
   <script>
     (function (window, document) {
       var typing = Fluid.plugins.typing;
@@ -657,3 +663,11 @@
 
 </body>
 </html>
+
+
+
+
+
+
+
+

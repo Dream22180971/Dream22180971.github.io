@@ -1,0 +1,39 @@
+{
+  "name": "dreamers-blog",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Dreamers'Blog - A personal blog powered by Hexo",
+  "main": "index.js",
+  "scripts": {
+    "clean": "hexo clean",
+    "generate": "hexo generate",
+    "server": "hexo server",
+    "deploy": "hexo deploy",
+    "new": "hexo new",
+    "publish": "hexo clean && hexo generate && hexo deploy"
+  },
+  "keywords": [
+    "blog",
+    "hexo",
+    "dreamers"
+  ],
+  "author": "Dreamer",
+  "license": "MIT",
+  "dependencies": {
+    "hexo": "^8.1.1",
+    "hexo-deployer-git": "^4.0.0",
+    "hexo-generator-archive": "^2.0.0",
+    "hexo-generator-category": "^2.0.0",
+    "hexo-generator-index": "^4.0.0",
+    "hexo-generator-search": "^2.4.0",
+    "hexo-generator-tag": "^2.0.0",
+    "hexo-renderer-ejs": "^2.0.0",
+    "hexo-renderer-marked": "^7.0.1",
+    "hexo-server": "^3.0.0",
+    "hexo-theme-fluid": "^1.9.9"
+  },
+  "devDependencies": {
+    "hexo-browsersync": "^0.3.0",
+    "hexo-generator-sitemap": "^3.0.1"
+  }
+}

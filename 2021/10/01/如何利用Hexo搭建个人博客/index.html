@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
+<html lang="zh-CN" data-default-color-scheme=auto scroll-behavior="smooth">
 
 
 
@@ -11,6 +11,11 @@
   <link rel="icon" href="/img/favicon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <!-- Preconnect to CDN domains -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <!-- Preload critical resources -->
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/css/bootstrap.min.css" as="style">
+  <link rel="preload" href="/css/main.css" as="style">
   
   <meta name="theme-color" content="#2f4154">
   <meta name="description" content="这是一篇文章">
@@ -34,7 +39,7 @@
   
   <title>如何利用Hexo搭建本博客平台 - Dreamers&#39;Blog</title>
 
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/css/bootstrap.min.css" />
 
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
@@ -102,7 +107,7 @@
 
     <!-- Collapsible content -->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
+      <ul class="navbar-nav mx-auto text-center">
         
           
           
@@ -280,6 +285,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
+            <h1 class="h1">如何利用Hexo搭建本博客平台</h1>
             <span class="h2" id="subtitle" title="如何利用Hexo搭建本博客平台">
               
             </span>
@@ -366,14 +372,14 @@
 <h5 id="4-初始化Hexo"><a href="#4-初始化Hexo" class="headerlink" title="4.初始化Hexo"></a>4.初始化Hexo</h5><figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk"><span class="hljs-regexp">//</span>在想要生成博客的一个空文件夹里面输入以下命令，进行初始化<br>hexo init<br></code></pre></div></td></tr></table></figure>
 
 <p>随即空文件夹会自动生成初始化的内容文件，结构如图所示</p>
-<p><img src="https://img.tujidu.com/image/6281f2c878f62.jpg" srcset="/img/loading.gif" lazyload alt="初始化结构图"></p>
+<p><img src="https://img.tujidu.com/image/6281f2c878f62.jpg" srcset="/img/loading.gif" lazyload loading="lazy" alt="初始化结构图"></p>
 <p>到这里，其实本地化的Hexo页面其实已经生成了，下面来测试一下。</p>
 <figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk"><span class="hljs-regexp">//</span>输入以下命令打开本地服务器，静态生成本地博客<br>hexo s <br></code></pre></div></td></tr></table></figure>
 
 <p>然后在浏览器输入以下地址,即可访问最初的Hexo页面。</p>
 <figure class="highlight apache"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs apache"><span class="hljs-attribute">localhost</span>:<span class="hljs-number">4000</span><br></code></pre></div></td></tr></table></figure>
 
-<p><img src="https://img.tujidu.com/images/2023/03/15/6411dbf4150c9.png" srcset="/img/loading.gif" lazyload alt="初始化页面"></p>
+<p><img src="https://img.tujidu.com/images/2023/03/15/6411dbf4150c9.png" srcset="/img/loading.gif" lazyload loading="lazy" alt="初始化页面"></p>
 <p>这也其实就搭建好了，然后的话就是上传到Github或Gitee服务器。后续更新…</p>
 
             </div>
@@ -545,8 +551,8 @@
 
   <!-- SCRIPTS -->
   
-  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
 
   <script>
     NProgress.configure({"showSpinner":false,"trickleSpeed":100})
@@ -558,7 +564,7 @@
 
 
 <script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
-<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/js/bootstrap.bundle.min.js" ></script>
 <script  src="/js/events.js" ></script>
 <script  src="/js/plugins.js" ></script>
 
@@ -587,7 +593,7 @@
 
 
 
-  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js" ></script>
 
 
 
@@ -600,7 +606,7 @@
 
 
 
-  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/lib/typed.min.js" ></script>
   <script>
     (function (window, document) {
       var typing = Fluid.plugins.typing;
@@ -631,3 +637,11 @@
 
 </body>
 </html>
+
+
+
+
+
+
+
+

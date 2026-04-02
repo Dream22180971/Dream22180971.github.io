@@ -16,6 +16,7 @@ Fluid.boot.initPlugins = function() {
   CONFIG.toc.enable && Fluid.plugins.initTocBot();
   CONFIG.image_zoom.enable && Fluid.plugins.initFancyBox();
   CONFIG.copy_btn && Fluid.plugins.initCopyCode();
+  CONFIG.typing.enable && Fluid.plugins.typing('去追寻，去探索，去热爱');
 };
 
 document.addEventListener('DOMContentLoaded', function() {
