@@ -10,7 +10,8 @@
     "server": "hexo server",
     "deploy": "hexo deploy",
     "new": "hexo new",
-    "publish": "hexo clean && hexo generate && hexo deploy"
+    "publish": "hexo clean && hexo generate && hexo deploy",
+    "admin": "node admin/server.js"
   },
   "keywords": [
     "blog",

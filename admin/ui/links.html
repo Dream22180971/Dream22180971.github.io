@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>链接管理 - Dreamers'Blog 管理后台</title>
+  <link rel="stylesheet" href="/admin/admin.css">
+  <style>
+    .link-row { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr auto; gap: 10px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--card-border); }
+    .link-row:last-child { border-bottom: none; }
+    .link-row-header { font-size: 12px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; }
+    .link-row input { padding: 7px 10px; }
+  </style>
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <h1>Dreamers'Blog</h1>
+      <p>管理后台</p>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">内容管理</div>
+      <a href="/admin/articles" class="nav-item">
+        <span class="icon">📝</span><span>文章管理</span>
+      </a>
+      <a href="/admin/media" class="nav-item">
+        <span class="icon">🖼️</span><span>媒体管理</span>
+      </a>
+      <div class="nav-section-label">站点设置</div>
+      <a href="/admin/links" class="nav-item active">
+        <span class="icon">🔗</span><span>链接管理</span>
+      </a>
+      <a href="/admin/site-config" class="nav-item">
+        <span class="icon">⚙️</span><span>站点配置</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="btn btn-secondary btn-sm" style="width:100%;justify-content:center;" onclick="logout()">退出登录</button>
+    </div>
+  </aside>
+
+  <div class="main-area">
+    <div class="top-header">
+      <span class="page-title">友情链接</span>
+      <div class="header-actions">
+        <button class="btn btn-secondary" onclick="addRow()">+ 添加</button>
+        <button class="btn btn-primary" onclick="saveLinks()">保存</button>
+      </div>
+    </div>
+
+    <div class="content-area">
+      <div id="msg"></div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">友情链接</span>
+          <span style="font-size:12px;color:var(--text-secondary);">保存后需重新生成博客才能生效</span>
+        </div>
+
+        <!-- 表头 -->
+        <div class="link-row link-row-header">
+          <span>名称</span><span>网址</span><span>头像 URL</span><span>描述</span><span></span>
+        </div>
+
+        <div id="links-container">
+          <div id="loading" style="padding:20px;text-align:center;color:#7f8c8d;">加载中...</div>
+        </div>
+
+        <div style="margin-top:16px;">
+          <button class="btn btn-outline" onclick="addRow()">+ 添加友情链接</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let rowIndex = 0;
+
+function addRow(data = {}) {
+  const container = document.getElementById('links-container');
+  const id = rowIndex++;
+  const row = document.createElement('div');
+  row.className = 'link-row';
+  row.id = `row-${id}`;
+  row.innerHTML = `
+    <input type="text" class="form-control f-name" placeholder="博客名称" value="${escAttr(data.name||'')}">
+    <input type="text" class="form-control f-url" placeholder="https://example.com" value="${escAttr(data.url||'')}">
+    <input type="text" class="form-control f-avatar" placeholder="头像图片地址（可选）" value="${escAttr(data.avatar||'')}">
+    <input type="text" class="form-control f-desc" placeholder="简短描述（可选）" value="${escAttr(data.description||'')}">
+    <button class="btn btn-danger btn-sm" onclick="removeRow(${id})">删除</button>
+  `;
+  container.appendChild(row);
+}
+
+function removeRow(id) {
+  const row = document.getElementById(`row-${id}`);
+  if (row) row.remove();
+}
+
+function collectLinks() {
+  const rows = document.querySelectorAll('#links-container .link-row');
+  const result = [];
+  for (const row of rows) {
+    const name = row.querySelector('.f-name').value.trim();
+    const url = row.querySelector('.f-url').value.trim();
+    if (!name || !url) continue;
+    result.push({
+      name,
+      url,
+      avatar: row.querySelector('.f-avatar').value.trim(),
+      description: row.querySelector('.f-desc').value.trim(),
+    });
+  }
+  return result;
+}
+
+async function loadLinks() {
+  try {
+    const res = await fetch('/api/admin/links/friends');
+    if (res.status === 401) { location.href = '/admin/login'; return; }
+    const links = await res.json();
+
+    document.getElementById('loading').remove();
+
+    if (links.length === 0) {
+      addRow(); // 默认添加一个空行
+    } else {
+      for (const link of links) addRow(link);
+    }
+  } catch (e) {
+    document.getElementById('loading').textContent = '加载失败：' + e.message;
+  }
+}
+
+async function saveLinks() {
+  const links = collectLinks();
+  try {
+    const res = await fetch('/api/admin/links/friends', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(links),
+    });
+    const data = await res.json();
+    if (res.ok) {
+      showMsg('success', `保存成功！共 ${data.count} 条友情链接。重新生成博客后生效。`);
+    } else {
+      showMsg('error', data.error);
+    }
+  } catch (e) {
+    showMsg('error', '保存失败：' + e.message);
+  }
+}
+
+function showMsg(type, text) {
+  const msg = document.getElementById('msg');
+  msg.innerHTML = `<div class="alert alert-${type}">${escHtml(text)}</div>`;
+  if (type === 'success') setTimeout(() => { msg.innerHTML = ''; }, 4000);
+}
+
+function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function escAttr(s) { return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+
+async function logout() {
+  await fetch('/api/admin/auth/logout', { method: 'POST' });
+  location.href = '/admin/login';
+}
+
+loadLinks();
+</script>
+</body>
+</html>

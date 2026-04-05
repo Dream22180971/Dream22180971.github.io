@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>编辑文章 - Dreamers'Blog 管理后台</title>
+  <link rel="stylesheet" href="/admin/admin.css">
+  <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
+  <style>
+    .editor-layout { display: grid; grid-template-columns: 300px 1fr; gap: 20px; align-items: start; }
+    .meta-panel { position: sticky; top: 0; }
+    .CodeMirror, .CodeMirror-scroll { min-height: 500px; }
+    .editor-toolbar { flex-wrap: wrap; }
+    @media (max-width: 900px) { .editor-layout { grid-template-columns: 1fr; } .meta-panel { position: static; } }
+  </style>
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <h1>Dreamers'Blog</h1>
+      <p>管理后台</p>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">内容管理</div>
+      <a href="/admin/articles" class="nav-item active">
+        <span class="icon">📝</span><span>文章管理</span>
+      </a>
+      <a href="/admin/media" class="nav-item">
+        <span class="icon">🖼️</span><span>媒体管理</span>
+      </a>
+      <div class="nav-section-label">站点设置</div>
+      <a href="/admin/links" class="nav-item">
+        <span class="icon">🔗</span><span>链接管理</span>
+      </a>
+      <a href="/admin/site-config" class="nav-item">
+        <span class="icon">⚙️</span><span>站点配置</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="btn btn-secondary btn-sm" style="width:100%;justify-content:center;" onclick="logout()">退出登录</button>
+    </div>
+  </aside>
+
+  <div class="main-area">
+    <div class="top-header">
+      <span class="page-title" id="page-title">新建文章</span>
+      <div class="header-actions">
+        <a href="/admin/articles" class="btn btn-secondary">← 返回列表</a>
+        <button class="btn btn-secondary" onclick="saveArticle(false)">保存</button>
+        <button class="btn btn-success" onclick="saveArticle(true)">保存并生成</button>
+      </div>
+    </div>
+
+    <div class="content-area">
+      <div id="msg"></div>
+
+      <div class="editor-layout">
+        <!-- 元数据面板 -->
+        <div class="meta-panel">
+          <div class="card">
+            <div class="card-header" style="margin-bottom:16px;padding-bottom:12px;">
+              <span class="card-title">文章信息</span>
+            </div>
+            <div class="form-group">
+              <label>标题 *</label>
+              <input type="text" id="f-title" class="form-control" placeholder="文章标题">
+            </div>
+            <div class="form-group">
+              <label>日期</label>
+              <input type="datetime-local" id="f-date" class="form-control">
+            </div>
+            <div class="form-group">
+              <label>分类</label>
+              <input type="text" id="f-cat-input" class="form-control" placeholder="输入分类后按 Enter">
+              <div class="tag-list" id="f-categories"></div>
+            </div>
+            <div class="form-group">
+              <label>标签</label>
+              <input type="text" id="f-tag-input" class="form-control" placeholder="输入标签后按 Enter">
+              <div class="tag-list" id="f-tags"></div>
+            </div>
+          </div>
+
+          <!-- 构建输出 -->
+          <div class="card" id="build-card" style="display:none;">
+            <div class="card-header" style="margin-bottom:12px;padding-bottom:12px;">
+              <span class="card-title">生成日志</span>
+              <button class="btn btn-secondary btn-sm" onclick="document.getElementById('build-card').style.display='none'">关闭</button>
+            </div>
+            <div class="build-output" id="build-output"></div>
+          </div>
+        </div>
+
+        <!-- 编辑器 -->
+        <div class="card" style="padding:16px;">
+          <textarea id="editor"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+<script>
+// ── EasyMDE 初始化 ─────────────────────────────────────
+const easyMDE = new EasyMDE({
+  element: document.getElementById('editor'),
+  spellChecker: false,
+  autosave: { enabled: false },
+  placeholder: '在此输入 Markdown 内容...',
+  toolbar: ['bold','italic','heading','|','quote','unordered-list','ordered-list','|','link','image','|','preview','side-by-side','fullscreen','|','guide'],
+  minHeight: '500px',
+});
+
+// ── 标签/分类输入 ──────────────────────────────────────
+const tagStores = { categories: [], tags: [] };
+
+function renderTags(type) {
+  const el = document.getElementById(`f-${type}`);
+  el.innerHTML = tagStores[type].map(t =>
+    `<span class="tag">${escHtml(t)}<span class="tag-remove" onclick="removeTag('${type}','${escHtml(t)}')">×</span></span>`
+  ).join('');
+}
+
+function addTag(type, value) {
+  const v = value.trim();
+  if (v && !tagStores[type].includes(v)) {
+    tagStores[type].push(v);
+    renderTags(type);
+  }
+}
+
+function removeTag(type, value) {
+  tagStores[type] = tagStores[type].filter(t => t !== value);
+  renderTags(type);
+}
+
+document.getElementById('f-cat-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') { e.preventDefault(); addTag('categories', e.target.value); e.target.value = ''; }
+});
+document.getElementById('f-tag-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') { e.preventDefault(); addTag('tags', e.target.value); e.target.value = ''; }
+});
+
+// ── 初始化日期 ─────────────────────────────────────────
+function initDate() {
+  const now = new Date();
+  const offset = now.getTimezoneOffset() * 60000;
+  const local = new Date(now - offset);
+  document.getElementById('f-date').value = local.toISOString().slice(0, 16);
+}
+
+// ── 加载已有文章 ───────────────────────────────────────
+const urlParams = new URLSearchParams(location.search);
+const editFilename = urlParams.get('filename');
+
+async function loadArticle() {
+  if (!editFilename) { initDate(); return; }
+
+  document.getElementById('page-title').textContent = '编辑文章';
+  try {
+    const res = await fetch(`/api/admin/articles/${encodeURIComponent(editFilename)}`);
+    if (res.status === 401) { location.href = '/admin/login'; return; }
+    if (!res.ok) { showMsg('error', '加载文章失败'); return; }
+
+    const data = await res.json();
+    const fm = data.frontMatter;
+
+    document.getElementById('f-title').value = fm.title || '';
+    // 格式化日期
+    if (fm.date) {
+      const d = new Date(fm.date);
+      if (!isNaN(d)) {
+        const offset = d.getTimezoneOffset() * 60000;
+        document.getElementById('f-date').value = new Date(d - offset).toISOString().slice(0, 16);
+      }
+    } else {
+      initDate();
+    }
+
+    tagStores.categories = [].concat(fm.categories || []);
+    tagStores.tags = [].concat(fm.tags || []);
+    renderTags('categories');
+    renderTags('tags');
+
+    easyMDE.value(data.content || '');
+  } catch (e) {
+    showMsg('error', '加载失败：' + e.message);
+  }
+}
+
+// ── 保存文章 ───────────────────────────────────────────
+async function saveArticle(andBuild) {
+  const title = document.getElementById('f-title').value.trim();
+  if (!title) { showMsg('error', '请输入文章标题'); return; }
+
+  const dateInput = document.getElementById('f-date').value;
+  const date = dateInput ? dateInput.replace('T', ' ') + ':00' : '';
+
+  const body = {
+    title,
+    date,
+    categories: tagStores.categories,
+    tags: tagStores.tags,
+    content: easyMDE.value(),
+  };
+
+  const method = editFilename ? 'PUT' : 'POST';
+  const url = editFilename ? `/api/admin/articles/${encodeURIComponent(editFilename)}` : '/api/admin/articles';
+
+  try {
+    const res = await fetch(url, {
+      method,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    const data = await res.json();
+
+    if (!res.ok) { showMsg('error', data.error || '保存失败'); return; }
+
+    showMsg('success', '保存成功！');
+
+    // 如果是新建，更新 URL
+    if (!editFilename && data.filename) {
+      history.replaceState(null, '', `/admin/article-edit?filename=${encodeURIComponent(data.filename)}`);
+      document.getElementById('page-title').textContent = '编辑文章';
+    }
+
+    if (andBuild) runBuild();
+  } catch (e) {
+    showMsg('error', '请求失败：' + e.message);
+  }
+}
+
+// ── 触发 Hexo 生成 ─────────────────────────────────────
+function runBuild() {
+  const card = document.getElementById('build-card');
+  const output = document.getElementById('build-output');
+  card.style.display = 'block';
+  output.textContent = '';
+  output.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+  const es = new EventSource('/api/admin/build');
+  es.onmessage = (e) => {
+    const data = JSON.parse(e.data);
+    const line = document.createElement('div');
+    line.textContent = data.message;
+    if (data.type === 'done') line.className = data.code === 0 ? 'log-done' : 'log-error';
+    output.appendChild(line);
+    output.scrollTop = output.scrollHeight;
+    if (data.type === 'done') es.close();
+  };
+  es.onerror = () => {
+    const line = document.createElement('div');
+    line.className = 'log-error';
+    line.textContent = '连接中断';
+    output.appendChild(line);
+    es.close();
+  };
+}
+
+// ── 工具函数 ───────────────────────────────────────────
+function showMsg(type, text) {
+  const msg = document.getElementById('msg');
+  msg.innerHTML = `<div class="alert alert-${type}">${escHtml(text)}</div>`;
+  if (type === 'success') setTimeout(() => { msg.innerHTML = ''; }, 3000);
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+async function logout() {
+  await fetch('/api/admin/auth/logout', { method: 'POST' });
+  location.href = '/admin/login';
+}
+
+// 初始化
+loadArticle();
+</script>
+</body>
+</html>

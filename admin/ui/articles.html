@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文章管理 - Dreamers'Blog 管理后台</title>
+  <link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+<div class="admin-layout">
+  <!-- 侧边栏 -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <h1>Dreamers'Blog</h1>
+      <p>管理后台</p>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">内容管理</div>
+      <a href="/admin/articles" class="nav-item active">
+        <span class="icon">📝</span><span>文章管理</span>
+      </a>
+      <a href="/admin/media" class="nav-item">
+        <span class="icon">🖼️</span><span>媒体管理</span>
+      </a>
+      <div class="nav-section-label">站点设置</div>
+      <a href="/admin/links" class="nav-item">
+        <span class="icon">🔗</span><span>链接管理</span>
+      </a>
+      <a href="/admin/site-config" class="nav-item">
+        <span class="icon">⚙️</span><span>站点配置</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="btn btn-secondary btn-sm" style="width:100%;justify-content:center;" onclick="logout()">退出登录</button>
+    </div>
+  </aside>
+
+  <!-- 主内容 -->
+  <div class="main-area">
+    <div class="top-header">
+      <span class="page-title">文章管理</span>
+      <div class="header-actions">
+        <button class="btn btn-primary" onclick="location.href='/admin/article-edit'">
+          + 新建文章
+        </button>
+      </div>
+    </div>
+
+    <div class="content-area">
+      <div id="msg"></div>
+
+      <div class="card">
+        <div id="loading" style="padding:40px;text-align:center;color:#7f8c8d;">加载中...</div>
+        <div class="table-wrap" id="table-wrap" style="display:none;">
+          <table>
+            <thead>
+              <tr>
+                <th>标题</th>
+                <th>日期</th>
+                <th>分类</th>
+                <th>标签</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="article-list"></tbody>
+          </table>
+        </div>
+        <div id="empty" class="empty-state" style="display:none;">
+          <div class="empty-icon">📄</div>
+          <p>还没有文章，点击右上角新建吧！</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+async function loadArticles() {
+  try {
+    const res = await fetch('/api/admin/articles');
+    if (res.status === 401) { location.href = '/admin/login'; return; }
+    const articles = await res.json();
+
+    document.getElementById('loading').style.display = 'none';
+
+    if (!articles.length) {
+      document.getElementById('empty').style.display = 'block';
+      return;
+    }
+
+    document.getElementById('table-wrap').style.display = 'block';
+    const tbody = document.getElementById('article-list');
+    tbody.innerHTML = articles.map(a => `
+      <tr>
+        <td><a href="/admin/article-edit?filename=${encodeURIComponent(a.filename)}" style="font-weight:500;">${escHtml(a.title)}</a></td>
+        <td style="color:#7f8c8d;white-space:nowrap;">${escHtml(String(a.date).slice(0,10))}</td>
+        <td>${a.categories.map(c => `<span class="badge badge-blue">${escHtml(c)}</span>`).join(' ')}</td>
+        <td>${a.tags.map(t => `<span class="badge badge-gray">${escHtml(t)}</span>`).join(' ')}</td>
+        <td class="td-actions">
+          <a href="/admin/article-edit?filename=${encodeURIComponent(a.filename)}" class="btn btn-secondary btn-sm">编辑</a>
+          <button class="btn btn-danger btn-sm" onclick="deleteArticle('${escHtml(a.filename)}', '${escHtml(a.title)}')">删除</button>
+        </td>
+      </tr>
+    `).join('');
+  } catch (e) {
+    document.getElementById('loading').innerHTML = `<div class="alert alert-error">加载失败：${e.message}</div>`;
+  }
+}
+
+async function deleteArticle(filename, title) {
+  if (!confirm(`确定要删除文章《${title}》吗？此操作不可恢复。`)) return;
+  const res = await fetch(`/api/admin/articles/${encodeURIComponent(filename)}`, { method: 'DELETE' });
+  const data = await res.json();
+  if (res.ok) {
+    document.getElementById('msg').innerHTML = '<div class="alert alert-success">删除成功</div>';
+    loadArticles();
+    setTimeout(() => { document.getElementById('msg').innerHTML = ''; }, 3000);
+  } else {
+    document.getElementById('msg').innerHTML = `<div class="alert alert-error">${data.error}</div>`;
+  }
+}
+
+async function logout() {
+  await fetch('/api/admin/auth/logout', { method: 'POST' });
+  location.href = '/admin/login';
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+loadArticles();
+</script>
+</body>
+</html>

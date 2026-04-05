@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>站点配置 - Dreamers'Blog 管理后台</title>
+  <link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <h1>Dreamers'Blog</h1>
+      <p>管理后台</p>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">内容管理</div>
+      <a href="/admin/articles" class="nav-item">
+        <span class="icon">📝</span><span>文章管理</span>
+      </a>
+      <a href="/admin/media" class="nav-item">
+        <span class="icon">🖼️</span><span>媒体管理</span>
+      </a>
+      <div class="nav-section-label">站点设置</div>
+      <a href="/admin/links" class="nav-item">
+        <span class="icon">🔗</span><span>链接管理</span>
+      </a>
+      <a href="/admin/site-config" class="nav-item active">
+        <span class="icon">⚙️</span><span>站点配置</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="btn btn-secondary btn-sm" style="width:100%;justify-content:center;" onclick="logout()">退出登录</button>
+    </div>
+  </aside>
+
+  <div class="main-area">
+    <div class="top-header">
+      <span class="page-title">站点配置</span>
+      <div class="header-actions">
+        <button class="btn btn-primary" onclick="saveConfig()">保存配置</button>
+      </div>
+    </div>
+
+    <div class="content-area">
+      <div id="msg"></div>
+
+      <div class="card" style="max-width:640px;">
+        <div class="card-header">
+          <span class="card-title">基本信息</span>
+        </div>
+        <div id="loading" style="padding:20px;text-align:center;color:#7f8c8d;">加载中...</div>
+        <form id="config-form" style="display:none;">
+          <div class="form-group">
+            <label>博客标题</label>
+            <input type="text" id="c-title" class="form-control" placeholder="Dreamers'Blog">
+          </div>
+          <div class="form-group">
+            <label>副标题</label>
+            <input type="text" id="c-subtitle" class="form-control" placeholder="博客副标题">
+          </div>
+          <div class="form-group">
+            <label>描述</label>
+            <textarea id="c-description" class="form-control" rows="2" placeholder="博客描述"></textarea>
+          </div>
+          <div class="form-group">
+            <label>关键词</label>
+            <input type="text" id="c-keywords" class="form-control" placeholder="HTML,CSS,JavaScript">
+            <div class="form-hint">多个关键词用英文逗号分隔</div>
+          </div>
+          <div class="form-group">
+            <label>作者</label>
+            <input type="text" id="c-author" class="form-control" placeholder="Dreamer">
+          </div>
+          <div class="form-group">
+            <label>语言</label>
+            <input type="text" id="c-language" class="form-control" placeholder="zh-CN">
+          </div>
+          <div class="form-group">
+            <label>时区</label>
+            <input type="text" id="c-timezone" class="form-control" placeholder="Asia/Shanghai">
+          </div>
+          <div class="form-group">
+            <label>网站 URL</label>
+            <input type="text" id="c-url" class="form-control" placeholder="https://yourblog.com">
+          </div>
+          <div class="form-group">
+            <label>每页文章数</label>
+            <input type="number" id="c-per_page" class="form-control" min="1" max="50" placeholder="10">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const FIELDS = ['title','subtitle','description','keywords','author','language','timezone','url','per_page'];
+
+async function loadConfig() {
+  try {
+    const res = await fetch('/api/admin/config');
+    if (res.status === 401) { location.href = '/admin/login'; return; }
+    const data = await res.json();
+
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('config-form').style.display = 'block';
+
+    for (const key of FIELDS) {
+      const el = document.getElementById(`c-${key}`);
+      if (el) el.value = data[key] || '';
+    }
+  } catch (e) {
+    document.getElementById('loading').textContent = '加载失败：' + e.message;
+  }
+}
+
+async function saveConfig() {
+  const body = {};
+  for (const key of FIELDS) {
+    const el = document.getElementById(`c-${key}`);
+    if (el) body[key] = el.value;
+  }
+
+  try {
+    const res = await fetch('/api/admin/config', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    const data = await res.json();
+    if (res.ok) {
+      showMsg('success', '配置已保存！重新生成博客后生效。');
+    } else {
+      showMsg('error', data.error);
+    }
+  } catch (e) {
+    showMsg('error', '保存失败：' + e.message);
+  }
+}
+
+function showMsg(type, text) {
+  const msg = document.getElementById('msg');
+  msg.innerHTML = `<div class="alert alert-${type}">${escHtml(text)}</div>`;
+  if (type === 'success') setTimeout(() => { msg.innerHTML = ''; }, 4000);
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+async function logout() {
+  await fetch('/api/admin/auth/logout', { method: 'POST' });
+  location.href = '/admin/login';
+}
+
+loadConfig();
+</script>
+</body>
+</html>

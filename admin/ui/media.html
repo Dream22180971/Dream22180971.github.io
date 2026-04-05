@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>媒体管理 - Dreamers'Blog 管理后台</title>
+  <link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <h1>Dreamers'Blog</h1>
+      <p>管理后台</p>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">内容管理</div>
+      <a href="/admin/articles" class="nav-item">
+        <span class="icon">📝</span><span>文章管理</span>
+      </a>
+      <a href="/admin/media" class="nav-item active">
+        <span class="icon">🖼️</span><span>媒体管理</span>
+      </a>
+      <div class="nav-section-label">站点设置</div>
+      <a href="/admin/links" class="nav-item">
+        <span class="icon">🔗</span><span>链接管理</span>
+      </a>
+      <a href="/admin/site-config" class="nav-item">
+        <span class="icon">⚙️</span><span>站点配置</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="btn btn-secondary btn-sm" style="width:100%;justify-content:center;" onclick="logout()">退出登录</button>
+    </div>
+  </aside>
+
+  <div class="main-area">
+    <div class="top-header">
+      <span class="page-title">媒体管理</span>
+      <div class="header-actions">
+        <label class="btn btn-primary" style="cursor:pointer;">
+          + 上传图片
+          <input type="file" id="file-input" accept="image/*" multiple style="display:none;" onchange="handleFileInput(this)">
+        </label>
+      </div>
+    </div>
+
+    <div class="content-area">
+      <div id="msg"></div>
+
+      <!-- 上传区 -->
+      <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-input').click()">
+        <div style="font-size:32px;margin-bottom:8px;">📁</div>
+        <p>点击或拖拽图片到此处上传</p>
+        <p style="font-size:12px;margin-top:4px;opacity:0.7;">支持 JPG、PNG、GIF、WebP、SVG（最大 10MB）</p>
+      </div>
+
+      <!-- 上传进度 -->
+      <div id="upload-progress" style="display:none;margin-bottom:16px;">
+        <div class="alert alert-info">上传中，请稍候...</div>
+      </div>
+
+      <!-- 媒体网格 -->
+      <div class="card">
+        <div id="loading" style="padding:40px;text-align:center;color:#7f8c8d;">加载中...</div>
+        <div id="media-grid" class="media-grid" style="display:none;"></div>
+        <div id="empty" class="empty-state" style="display:none;">
+          <div class="empty-icon">🖼️</div>
+          <p>还没有图片，上传一张吧！</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+async function loadMedia() {
+  try {
+    const res = await fetch('/api/admin/media');
+    if (res.status === 401) { location.href = '/admin/login'; return; }
+    const files = await res.json();
+
+    document.getElementById('loading').style.display = 'none';
+
+    if (!files.length) {
+      document.getElementById('empty').style.display = 'block';
+      return;
+    }
+
+    document.getElementById('media-grid').style.display = 'grid';
+    renderGrid(files);
+  } catch (e) {
+    document.getElementById('loading').innerHTML = `<div class="alert alert-error">加载失败：${e.message}</div>`;
+  }
+}
+
+function renderGrid(files) {
+  const grid = document.getElementById('media-grid');
+  grid.innerHTML = files.map(f => {
+    const isImage = /\.(jpg|jpeg|png|gif|webp)$/i.test(f.filename);
+    const thumb = isImage
+      ? `<img class="media-thumb" src="${escHtml(f.url)}" loading="lazy" alt="${escHtml(f.filename)}">`
+      : `<div class="media-thumb-placeholder">📄</div>`;
+    return `
+      <div class="media-item" id="item-${escHtml(f.filename)}">
+        ${thumb}
+        <div class="media-info">
+          <div class="media-name" title="${escHtml(f.filename)}">${escHtml(f.filename)}</div>
+          <div class="media-size">${escHtml(f.size)}</div>
+          <div class="media-actions">
+            <button class="btn btn-secondary btn-sm" onclick="copyUrl('${escHtml(f.url)}')">复制链接</button>
+            <button class="btn btn-danger btn-sm" onclick="deleteMedia('${escHtml(f.filename)}')">删除</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function copyUrl(url) {
+  const mdUrl = `![图片](${url})`;
+  navigator.clipboard.writeText(mdUrl).then(() => {
+    showMsg('success', `已复制 Markdown 图片链接`);
+  }).catch(() => {
+    prompt('复制以下内容：', mdUrl);
+  });
+}
+
+async function deleteMedia(filename) {
+  if (!confirm(`确定要删除图片 ${filename} 吗？`)) return;
+  const res = await fetch(`/api/admin/media/${encodeURIComponent(filename)}`, { method: 'DELETE' });
+  const data = await res.json();
+  if (res.ok) {
+    showMsg('success', '删除成功');
+    loadMedia();
+  } else {
+    showMsg('error', data.error);
+  }
+}
+
+// 拖拽上传
+const zone = document.getElementById('upload-zone');
+zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+zone.addEventListener('drop', e => {
+  e.preventDefault();
+  zone.classList.remove('drag-over');
+  uploadFiles(e.dataTransfer.files);
+});
+
+function handleFileInput(input) {
+  if (input.files.length) uploadFiles(input.files);
+  input.value = '';
+}
+
+async function uploadFiles(fileList) {
+  const progress = document.getElementById('upload-progress');
+  progress.style.display = 'block';
+
+  const form = new FormData();
+  for (const file of fileList) form.append('file', file, file.name);
+
+  try {
+    const res = await fetch('/api/admin/media/upload', { method: 'POST', body: form });
+    const data = await res.json();
+    progress.style.display = 'none';
+    if (res.ok) {
+      showMsg('success', `成功上传 ${data.length} 个文件`);
+      loadMedia();
+    } else {
+      showMsg('error', data.error);
+    }
+  } catch (e) {
+    progress.style.display = 'none';
+    showMsg('error', '上传失败：' + e.message);
+  }
+}
+
+function showMsg(type, text) {
+  const msg = document.getElementById('msg');
+  msg.innerHTML = `<div class="alert alert-${type}">${escHtml(text)}</div>`;
+  if (type === 'success') setTimeout(() => { msg.innerHTML = ''; }, 3000);
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+async function logout() {
+  await fetch('/api/admin/auth/logout', { method: 'POST' });
+  location.href = '/admin/login';
+}
+
+loadMedia();
+</script>
+</body>
+</html>
