@@ -6,7 +6,7 @@ const path = require('node:path');
 const yaml = require('js-yaml');
 const { sendJson, parseBody } = require('../utils/files');
 
-const DATA_DIR = path.resolve(__dirname, '..', '..', 'source', '_data');
+const DATA_DIR = path.resolve(__dirname, '..', '..', 'frontend', 'source', '_data');
 const FRIENDS_PATH = path.join(DATA_DIR, 'links.yml');
 
 async function ensureDataDir() {

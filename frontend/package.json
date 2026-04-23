@@ -14,7 +14,7 @@
     "deploy": "node ./node_modules/hexo-cli/bin/hexo deploy",
     "new": "node ./node_modules/hexo-cli/bin/hexo new",
     "publish": "npm run clean && npm run generate && npm run deploy",
-    "admin": "node admin/server.js"
+    "admin": "node ../backend/server.js"
   },
   "keywords": [
     "blog",

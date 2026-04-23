@@ -4,13 +4,15 @@ const { spawn } = require('node:child_process');
 const path = require('node:path');
 
 const PROJECT_ROOT = path.resolve(__dirname, '..', '..');
+const FRONTEND_ROOT = path.join(PROJECT_ROOT, 'frontend');
 
 // 运行 hexo generate，通过 SSE 流式输出日志
 // onData(line: string)，onClose(code: number)
 function runHexoGenerate(onData, onClose) {
-  const hexoBin = path.join(PROJECT_ROOT, 'node_modules', '.bin', 'hexo');
-  const child = spawn('node', [hexoBin, 'generate'], {
-    cwd: PROJECT_ROOT,
+  // Use Hexo's JS entrypoint directly to avoid platform-specific `.cmd`/`.ps1` shims.
+  const hexoEntry = path.join(FRONTEND_ROOT, 'node_modules', 'hexo', 'bin', 'hexo');
+  const child = spawn('node', [hexoEntry, 'generate'], {
+    cwd: FRONTEND_ROOT,
     shell: false,
   });
 

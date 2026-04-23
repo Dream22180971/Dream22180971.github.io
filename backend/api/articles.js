@@ -8,7 +8,7 @@ const fm = require('hexo-front-matter');
 
 const { sendJson, parseBody, safePath } = require('../utils/files');
 
-const POSTS_DIR = path.resolve(__dirname, '..', '..', 'source', '_posts');
+const POSTS_DIR = path.resolve(__dirname, '..', '..', 'frontend', 'source', '_posts');
 
 // 确保目录存在
 async function ensurePostsDir() {

@@ -6,7 +6,7 @@ const path = require('node:path');
 const yaml = require('js-yaml');
 const { sendJson, parseBody } = require('../utils/files');
 
-const CONFIG_PATH = path.resolve(__dirname, '..', '..', '_config.yml');
+const CONFIG_PATH = path.resolve(__dirname, '..', '..', 'frontend', '_config.yml');
 
 // 只暴露这些字段，防止意外修改危险配置
 const SAFE_FIELDS = ['title', 'subtitle', 'description', 'keywords', 'author', 'language', 'timezone', 'url', 'per_page'];

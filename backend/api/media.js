@@ -5,7 +5,7 @@ const fsSync = require('node:fs');
 const path = require('node:path');
 const { sendJson, parseMultipart, safePath } = require('../utils/files');
 
-const IMG_DIR = path.resolve(__dirname, '..', '..', 'img');
+const IMG_DIR = path.resolve(__dirname, '..', '..', 'frontend', 'source', 'img');
 
 const IMAGE_EXTS = new Set(['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg', '.ico', '.bmp']);
 
