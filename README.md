@@ -1,6 +1,6 @@
 # Sean Walter · 数字观测站
 
-[![Website](https://img.shields.io/badge/website-dream22180971.github.io-283547)](https://dream22180971.github.io/) [![GitHub Pages](https://img.shields.io/badge/hosting-GitHub%20Pages-222)](https://pages.github.com/) [![Languages](https://img.shields.io/badge/language-中文%20%7C%20English-bb8572)](https://dream22180971.github.io/)
+[![Website](https://img.shields.io/badge/website-dream22180971.github.io-283547)](https://dream22180971.github.io/) [![GitHub Pages](https://img.shields.io/badge/hosting-GitHub%20Pages-222)](https://pages.github.com/) [![Languages](https://img.shields.io/badge/language-中文%20%7C%20English-bb8572)](https://dream22180971.github.io/) [![GitHub stars](https://img.shields.io/github/stars/Dream22180971/Dream22180971.github.io?style=social)](https://github.com/Dream22180971/Dream22180971.github.io/stargazers)
 
 一个围绕个人网站星系设计的导航站：从 AI 工程、软件测试与开源项目，走到阅读、电影和生活随想。
 
@@ -43,3 +43,11 @@ python -m http.server 8000
 ## 部署
 
 仓库通过 GitHub Pages 发布：在 **Settings → Pages** 中选择 **Deploy from a branch**，指定 `main` 分支和 `/ (root)`。推送后可在仓库的 Actions 查看构建与部署状态。
+
+## 喜欢这个项目？
+
+如果这里的星系交互、动效节奏或组织方式对你有帮助，欢迎点一个 Star。它会让我知道这个方向值得继续打磨，也方便你之后回来查看更新。
+
+[**给这个仓库点 Star**](https://github.com/Dream22180971/Dream22180971.github.io/stargazers) · [**Fork 后改成自己的导航站**](https://github.com/Dream22180971/Dream22180971.github.io/fork)
+
+如果只想先看看效果，直接访问 [线上站点](https://dream22180971.github.io/) 更快。
