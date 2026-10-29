@@ -245,14 +245,14 @@ footer a:hover { color: #f0c0a9; }
 .discovery-caption { display: block; padding: 13px 16px; color: #c7d1dd; font-size: 11px; letter-spacing: .14em; }
 .discovery-visual { order: 1; width: 100%; max-width: 1180px; margin: 0 auto; }
 .discovery-visual img { aspect-ratio: 16 / 7; object-fit: cover; object-position: center; }
-.discovery-label, .discovery h2 { grid-column: 1; }
-.discovery h2 { margin: 12px 0 0; }
-.discovery-intro { grid-column: 2; grid-row: 1 / 3; margin: 0; max-width: 48ch; }
-.discovery-actions { grid-column: 2; margin-top: 18px; }
+.discovery-label { grid-column: 1; grid-row: 1; margin: 0; }
+.discovery h2 { grid-column: 1; grid-row: 2; margin: 10px 0 0; }
+.discovery-intro { grid-column: 2; grid-row: 1; margin: 0; max-width: 48ch; line-height: 1.65; }
+.discovery-actions { grid-column: 2; grid-row: 2; margin-top: 12px; }
 @media (min-width: 761px) and (min-height: 650px) {
   #spaces.discovery { min-height: calc(100dvh - 78px); padding-block: clamp(28px, 4vh, 48px); }
   .discovery-visual { width: min(100%, 1180px, calc((100dvh - 410px) * 16 / 7)); }
-  .discovery-copy { width: min(100%, 1180px); margin-inline: auto; padding-top: 20px; }
+  .discovery-copy { width: min(100%, 1180px, calc((100dvh - 410px) * 16 / 7)); margin-inline: auto; padding-top: 20px; }
   .discovery h2 { font-size: clamp(32px, 3.2vw, 48px); }
   .discovery-actions { margin-top: 10px; }
 }
