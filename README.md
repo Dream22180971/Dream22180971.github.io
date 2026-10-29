@@ -28,6 +28,7 @@ python -m http.server 8000
 - 各内容区使用深空色调与背景层，轨道入口保留直接跳转。
 - `sections-design.css` 与 `sections-motion.js` 控制后续内容区的布局和滚动动效；减少动态效果时关闭运动。
 - 标题光晕、按钮光束和底部文字粒子使用 CSS 实现，并遵循减少动态效果设置。
+- 搜索配置：`robots.txt` 允许抓取，`sitemap.xml` 列出首页；标题、描述、规范网址和 Person 结构化数据位于 `index.html`。语言切换目前共用一个网址，英文不是独立索引页面。发布后可在 Search Console 提交站点地图并检查索引状态。
 
 ## 发布
 

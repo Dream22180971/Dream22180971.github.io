@@ -26,8 +26,8 @@
   function setLanguage(lang) {
     nodes.forEach(({node,value,key}) => { node.nodeValue = lang === 'en' ? value.replace(key, translations[key]) : value; });
     document.documentElement.lang = lang === 'en' ? 'en' : 'zh-CN';
-    document.title = lang === 'en' ? 'Sean Walter | Digital Observatory' : 'Sean Walter | 数字观测站';
-    document.querySelector('meta[name="description"]').content = lang === 'en' ? 'Sean’s personal spaces: technology, open-source projects, and life.' : '肖恩的个人空间：技术实践、开源项目与生活记录。';
+    document.title = lang === 'en' ? 'Sean Walter | AI Engineering, Testing and Open Source' : '肖恩 Sean Walter | AI 开发、软件测试与开源项目';
+    document.querySelector('meta[name="description"]').content = lang === 'en' ? 'Explore Sean Walter’s AI engineering, software testing, open-source projects and personal websites.' : '肖恩 Sean Walter 的个人导航站，探索 AI 开发、软件测试实践、开源项目、动画记忆博物馆与生活随笔。';
     document.querySelector('nav').setAttribute('aria-label', lang === 'en' ? 'Main navigation' : '主导航');
     const museum = document.querySelector('.discovery-visual');
     if (museum) {
