@@ -1,19 +1,48 @@
-# Sean Walter · 数字观测站
+<div align="center">
 
-[![Website](https://img.shields.io/badge/website-dream22180971.github.io-283547)](https://dream22180971.github.io/) [![GitHub Pages](https://img.shields.io/badge/hosting-GitHub%20Pages-222)](https://pages.github.com/) [![Languages](https://img.shields.io/badge/language-中文%20%7C%20English-bb8572)](https://dream22180971.github.io/) [![GitHub stars](https://img.shields.io/github/stars/Dream22180971/Dream22180971.github.io?style=social)](https://github.com/Dream22180971/Dream22180971.github.io/stargazers)
+# 🌌 Sean Walter · 数字观测站
 
-一个围绕个人网站星系设计的导航站：从 AI 工程、软件测试与开源项目，走到阅读、电影和生活随想。
+**在星系里，找到我的每一个数字空间。**
 
-**在线访问：** https://dream22180971.github.io/
+[![Website](https://img.shields.io/badge/%F0%9F%8C%90_%E5%9C%A8%E7%BA%BF%E7%AB%99%E7%82%B9-dream22180971.github.io-283547?style=for-the-badge)](https://dream22180971.github.io/)
+[![GitHub stars](https://img.shields.io/github/stars/Dream22180971/Dream22180971.github.io?style=social)](https://github.com/Dream22180971/Dream22180971.github.io/stargazers)
 
-## 网站内容
+[![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)](https://developer.mozilla.org/docs/Web/HTML)
+[![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)](https://developer.mozilla.org/docs/Web/CSS)
+[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)](https://developer.mozilla.org/docs/Web/JavaScript)
+[![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-222?style=flat-square&logo=githubpages&logoColor=white)](https://pages.github.com/)
 
-- **星系入口**：三个可点击的轨道节点，连接个人主站、项目作品集和生活博客。
-- **精选发现**：展示[动画记忆博物馆](https://museum.seanwalter.top/)的真实首页画面，提供体验与项目仓库入口。
-- **精选项目与文章**：项目链接指向 GitHub，文章链接指向主站原文。
-- **中英文切换**：默认中文，语言偏好保存在访客的浏览器中；英文界面链接的文章可能仍为中文。
+</div>
 
-## 本地运行
+---
+
+## ✨ 这是什么
+
+一个围绕**个人网站星系**设计的导航站：从 AI 工程、软件测试与开源项目，走到阅读、电影和生活随想。
+
+纯静态、无构建、无依赖，打开就能看。
+
+**🌐 在线访问：** https://dream22180971.github.io/
+
+## 🧭 网站内容
+
+| 区域 | 体验 |
+| --- | --- |
+| 🪐 **星系入口** | 三个可点击的轨道节点，连接个人主站、项目作品集和生活博客 |
+| 🏛️ **精选发现** | 独立展示[动画记忆博物馆](https://museum.seanwalter.top/)，附体验与仓库入口 |
+| 🛠️ **精选项目** | LLM Usage Collector、TestPilotAgent 等项目的 GitHub 入口 |
+| 📝 **精选文章** | 指向主站原文，不重复发布全文 |
+| 🌏 **中英文切换** | 默认中文，语言偏好保存在访客浏览器；英文界面链接的文章可能仍为中文 |
+
+## 🎨 交互设计
+
+- 🛰️ **轨道运动**：网站节点均匀分布并绕中心运行，鼠标移入即暂停，方便点击。
+- 💫 **悬停预览**：悬停或键盘聚焦节点时显示该空间简介，其他节点适度弱化。
+- 🌠 **粒子星系**：Canvas 绘制旋臂粒子，页面隐藏或离开视口时停止渲染。
+- 🪄 **滚动叙事**：内容区背景随滚动漂移，标题光晕、按钮光束与底部文字粒子呼应首屏。
+- ♿ **可访问性**：支持键盘焦点；系统开启「减少动态效果」时关闭运动；触控目标不小于 44px。
+
+## 🚀 本地运行
 
 ```bash
 git clone https://github.com/Dream22180971/Dream22180971.github.io.git
@@ -21,33 +50,44 @@ cd Dream22180971.github.io
 python -m http.server 8000
 ```
 
-访问 http://localhost:8000/。纯静态网站，无需安装依赖或执行构建。
+打开 http://localhost:8000/ 即可。
 
-## 项目结构与维护
+## 🗂️ 项目结构
 
 | 文件 | 用途 |
 | --- | --- |
-| `index.html` | 页面结构、内容、链接和搜索元数据 |
-| `galaxy.js` | 首屏粒子与网站节点运动 |
-| `language.js` | 中英文文案与语言切换 |
-| `sections-design.css` / `sections-motion.js` | 内容区样式和滚动动效 |
-| `footer.js` / `favicon.svg` | 页脚年份和浏览器标签图标 |
-| `assets/museum-home.webp` | 动画记忆博物馆线上首页截图 |
-| `robots.txt` / `sitemap.xml` | 抓取规则和首页站点地图 |
+| 📄 `index.html` | 页面结构、内容、链接与搜索元数据 |
+| 🌌 `galaxy.js` | 首屏粒子与网站节点运动 |
+| 🌐 `language.js` | 中英文文案与语言切换 |
+| 🎨 `sections-design.css` | 内容区布局与视觉样式 |
+| 🎞️ `sections-motion.js` | 滚动动效与入场节奏 |
+| 🕰️ `footer.js` | 页脚年份自动更新 |
+| 🔖 `favicon.svg` | 星球与轨道图标 |
+| 🖼️ `assets/museum-home.webp` | 动画记忆博物馆首页截图 |
+| 🤖 `robots.txt` / 🗺️ `sitemap.xml` | 抓取规则与首页站点地图 |
 
-- **添加网站**：在 `.scene` 增加 `.point` 链接，更新 `language.js` 翻译、`galaxy.js` 中的域名简介和页脚链接；修改脚本后更新页面引用的版本参数。
-- **更新精选内容**：项目和文章在 `index.html` 中手动维护，不会自动同步；动画馆网站改版后可更新截图。
-- **动效与可访问性**：节点悬停或聚焦时可查看简介；支持键盘导航和减少动态效果设置。粒子在页面隐藏或离开可视区域时停止运行。
-- **SEO**：页面包含标题、描述、规范网址和 Person 结构化数据。中英文目前共用一个网址，英文不是独立索引页面；可在 Search Console 提交站点地图并查看索引状态。
+## 🧩 维护指南
 
-## 部署
+- ➕ **添加网站**：在 `.scene` 增加 `.point` 链接，更新 `language.js` 翻译、`galaxy.js` 域名简介与页脚链接，并更新脚本版本参数。
+- 🔄 **更新精选内容**：项目与文章在 `index.html` 手动维护，不会自动同步；动画馆改版后可更新截图。
+- 🔍 **SEO**：已包含标题、描述、规范网址与 Person 结构化数据。中英文共用一个网址，英文不是独立索引页面；可在 Search Console 提交站点地图。
 
-仓库通过 GitHub Pages 发布：在 **Settings → Pages** 中选择 **Deploy from a branch**，指定 `main` 分支和 `/ (root)`。推送后可在仓库的 Actions 查看构建与部署状态。
+## 📦 部署
 
-## 喜欢这个项目？
+通过 GitHub Pages 发布：**Settings → Pages → Deploy from a branch**，选择 `main` 与 `/ (root)`。推送后在仓库 **Actions** 查看构建与部署状态。
+
+## ⭐ 喜欢这个项目？
 
 如果这里的星系交互、动效节奏或组织方式对你有帮助，欢迎点一个 Star。它会让我知道这个方向值得继续打磨，也方便你之后回来查看更新。
 
-[**给这个仓库点 Star**](https://github.com/Dream22180971/Dream22180971.github.io/stargazers) · [**Fork 后改成自己的导航站**](https://github.com/Dream22180971/Dream22180971.github.io/fork)
+[**⭐ 给这个仓库点 Star**](https://github.com/Dream22180971/Dream22180971.github.io/stargazers) · [**🍴 Fork 后改成自己的导航站**](https://github.com/Dream22180971/Dream22180971.github.io/fork)
 
-如果只想先看看效果，直接访问 [线上站点](https://dream22180971.github.io/) 更快。
+只想先看看效果？直接访问 [线上站点](https://dream22180971.github.io/) 更快。
+
+---
+
+<div align="center">
+
+**从真实问题出发，小步构建，持续发布。**
+
+</div>
