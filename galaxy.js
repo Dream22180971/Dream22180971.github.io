@@ -14,7 +14,7 @@
   function positionNodes() {
     const radius = Math.max(0, Math.min(width, height, 510) * .5 - (width < 500 ? 52 : 64));
     nodes.forEach((node, index) => {
-      const angle = orbitTime * .055 - Math.PI / 2 + index * Math.PI * 2 / 3;
+      const angle = orbitTime * .12 - Math.PI / 2 + index * Math.PI * 2 / 3;
       node.style.left = `${width / 2 + Math.cos(angle) * radius}px`;
       node.style.top = `${height / 2 + Math.sin(angle) * radius}px`;
     });
@@ -67,8 +67,10 @@
     frame = 0; last = 0; draw();
     if (visible && !reduced.matches && !document.hidden) frame = requestAnimationFrame(tick);
   }
-  scene.addEventListener('pointerenter', () => { interacting = true; });
-  scene.addEventListener('pointerleave', () => { interacting = false; });
+  nodes.forEach(node => {
+    node.addEventListener('pointerenter', () => { interacting = true; });
+    node.addEventListener('pointerleave', () => { interacting = false; });
+  });
   scene.addEventListener('focusin', () => { interacting = true; });
   scene.addEventListener('focusout', event => { if (!scene.contains(event.relatedTarget)) interacting = false; });
   new ResizeObserver(resize).observe(scene);
