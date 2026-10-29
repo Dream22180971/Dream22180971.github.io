@@ -10,6 +10,7 @@
     '作品 / 项目':'WORK / PROJECTS', '创造中的作品':'Things I build', '看看我做过什么，以及想解决什么问题。':'Explore my projects and the problems behind them.',
     '生活 / 随笔':'LIFE / JOURNAL', '肖恩的白日梦':'Sean’s Daydreams', '阅读、电影与生活随想。':'Notes on books, films, and everyday life.',
     '正在构建。':'Currently building.', '从真实问题开始。':'Starting with real problems.', '本地汇总多个 AI Coding Agent 的用量数据。':'A local view of usage across AI coding agents.', '把需求转化为结构化测试资产。':'Turn requirements into structured testing assets.', '查看项目 ↗':'View project ↗', '查看全部项目 ↗':'View all projects ↗',
+    '动画记忆博物馆':'Animation Memory Museum', '把动画海报、台词与个人回忆组织成数字展厅。':'A digital exhibition of animation posters, quotes, and personal memories.',
     '实践与思考。':'Practice & reflection.', '从问题、验证和复盘中留下的记录。':'Notes from problems, verification, and reflection.',
     'AI 写完了，也说修好了：测试人员如何验收编码 Agent？':'AI says it’s fixed: how should testers verify a coding agent’s work?', '把 Agent 的完成声明拆成可以复查的验收证据。':'Turn an agent’s completion claim into reviewable evidence.', 'AI 测试 ↗':'AI testing ↗',
     '普通电脑搭一套高中九科 RAG 助手，我真正解决了哪些问题？':'Building a nine-subject RAG assistant on an ordinary computer', '从教材解析到检索验证，了解项目的实际边界。':'From textbook parsing to retrieval checks and real-world limitations.', '项目实践 ↗':'Project notes ↗',
