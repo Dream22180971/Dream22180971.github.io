@@ -228,3 +228,20 @@ footer a:hover { color: #f0c0a9; }
   #spaces .place:hover, #spaces .place:focus-visible { transform: none; }
   .section-arrived { animation: none; }
 }
+
+#spaces.discovery { display: grid; grid-template-columns: minmax(0,.8fr) minmax(0,1.2fr); gap: clamp(32px,6vw,100px); align-items: center; }
+.discovery-copy { max-width: 480px; }
+.discovery-label { color: #e8bba4; font-size: 12px; letter-spacing: .14em; }
+.discovery h2 { font-size: clamp(36px,4vw,60px); line-height: 1.2; letter-spacing: -.04em; margin: 28px 0; }
+.discovery-intro { color: #c2ccda; font-size: 16px; line-height: 1.9; }
+.discovery-actions { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; margin-top: 32px; }
+.discovery-actions a { min-height: 48px; display: inline-flex; align-items: center; font-size: 14px; }
+.discovery-primary { background: #d7a38d; color: #241c20; padding: 0 20px; font-weight: 700; }
+.discovery-primary:hover { background: #f0c5af; }
+.discovery-secondary { color: #e8c5b5; border-bottom: 1px solid #c69480; }
+.discovery-visual { display: block; position: relative; overflow: hidden; border: 1px solid #9aa8be55; background: #111723; box-shadow: 0 24px 80px #0007; }
+.discovery-visual img { display: block; width: 100%; height: auto; transition: transform .7s ease; }
+.discovery-visual:hover img, .discovery-visual:focus-visible img { transform: scale(1.025); }
+.discovery-caption { display: block; padding: 13px 16px; color: #c7d1dd; font-size: 11px; letter-spacing: .14em; }
+@media (max-width:760px) { #spaces.discovery { grid-template-columns: 1fr; gap: 35px; } .discovery h2 { margin: 20px 0; } }
+@media (prefers-reduced-motion:reduce) { .discovery-visual img { transition: none; } .discovery-visual:hover img, .discovery-visual:focus-visible img { transform: none; } }
