@@ -40,7 +40,7 @@
         }
       }, { threshold: 0.1 });
       for (const section of sections) {
-        for (const element of section.querySelectorAll('.heading, .place, .work, .article')) {
+        for (const element of section.querySelectorAll('.heading, .place, .work, .article, .discovery-visual, .discovery-copy')) {
           if (!element.classList.contains('section-arrived')) observer.observe(element);
         }
       }
