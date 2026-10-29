@@ -1,17 +1,60 @@
 /* The lower half of the observatory: destinations, projects and field notes. */
+.scene .point {
+  isolation: isolate;
+  transition: color .3s ease, opacity .3s ease, filter .3s ease;
+}
+.scene:has(.point:hover) .point:not(:hover),
+.scene:has(.point:focus-visible) .point:not(:focus-visible) {
+  opacity: .42;
+}
+.node-preview {
+  position: absolute;
+  top: calc(100% - 2px);
+  left: 50%;
+  transform: translate(-50%, 5px);
+  width: max-content;
+  max-width: min(220px, 70vw);
+  padding: 10px 13px;
+  border: 1px solid #8d9bb766;
+  background: #141e30ed;
+  color: #e1e8f1;
+  font-size: 12px;
+  line-height: 1.5;
+  white-space: normal;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .25s ease, transform .25s ease, visibility .25s;
+}
+.scene .point:hover .node-preview,
+.scene .point:focus-visible .node-preview {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+.preview-en { display: none; }
+html:lang(en) .preview-zh { display: none; }
+html:lang(en) .preview-en { display: inline; }
+@media (hover: none) {
+  .scene .point:hover .node-preview { opacity: 0; visibility: hidden; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scene .point, .node-preview { transition: none; }
+}
+
 #spaces, #work, #writing {
   --section-drift: 0px;
   padding-block: clamp(88px, 12vw, 160px);
 }
 
 #spaces::before {
-  background: radial-gradient(ellipse at 82% 18%, #304d7166, transparent 48%), #10192a;
+  background: radial-gradient(ellipse at 82% calc(18% + var(--section-drift)), #304d7166, transparent 48%), linear-gradient(180deg, #0d1422, #10192a 24%, #10192a);
 }
 #work::before {
-  background: radial-gradient(ellipse at 12% 80%, #63455355, transparent 48%), #151a29;
+  background: radial-gradient(ellipse at 12% calc(80% + var(--section-drift)), #63455355, transparent 48%), linear-gradient(180deg, #10192a, #151a29 24%, #151a29);
 }
 #writing::before {
-  background: radial-gradient(ellipse at 85% 30%, #35547855, transparent 48%), #101827;
+  background: radial-gradient(ellipse at 85% calc(30% + var(--section-drift)), #35547855, transparent 48%), linear-gradient(180deg, #151a29, #101827 24%, #101827);
 }
 
 #spaces::after, #work::after, #writing::after {

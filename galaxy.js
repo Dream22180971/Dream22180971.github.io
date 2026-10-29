@@ -10,6 +10,26 @@
   scene.append(canvas);
 
   const nodes = [...scene.querySelectorAll('.point')];
+  const descriptions = {
+    'seanwalter.top': ['AI、测试与独立开发的实践', 'AI, testing, and independent development'],
+    'projects.seanwalter.top': ['项目与创作的作品集', 'Projects and creative work'],
+    'dream.seanwalter.top': ['阅读、电影与生活随笔', 'Books, films, and personal notes']
+  };
+  nodes.forEach(node => {
+    const description = descriptions[new URL(node.href).hostname];
+    if (!description) return;
+    const preview = document.createElement('span');
+    preview.className = 'node-preview';
+    preview.setAttribute('aria-hidden', 'true');
+    const zh = document.createElement('span');
+    zh.className = 'preview-zh';
+    zh.textContent = description[0];
+    const en = document.createElement('span');
+    en.className = 'preview-en';
+    en.textContent = description[1];
+    preview.append(zh, en);
+    node.append(preview);
+  });
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const tau = Math.PI * 2;
   let width = 0, height = 0, scale = 1, radius = 0;
