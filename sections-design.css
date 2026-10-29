@@ -1,4 +1,14 @@
 /* The lower half of the observatory: destinations, projects and field notes. */
+.hero h1 { animation: title-glow 6s ease-in-out infinite; }
+.cta { position: relative; overflow: hidden; isolation: isolate; }
+.cta::before { content: ""; position: absolute; z-index: -1; inset: 0; background: linear-gradient(105deg, transparent 35%, #fff8 50%, transparent 65%); transform: translateX(-150%); transition: transform .65s ease; pointer-events: none; }
+.cta:hover::before, .cta:focus-visible::before { transform: translateX(150%); }
+.strip span:first-child { position: relative; isolation: isolate; }
+.strip span:first-child::after { content: ""; position: absolute; inset: -8px -18px; pointer-events: none; background: radial-gradient(circle, #f5d3bd 0 1px, transparent 2px), radial-gradient(circle, #a8c9ed 0 1px, transparent 2px); background-size: 45px 22px, 67px 26px; opacity: .55; animation: text-particles 9s linear infinite; z-index: -1; }
+@keyframes title-glow { 0%, 100% { text-shadow: 0 0 10px #cedbff10; } 50% { text-shadow: 0 0 22px #d9e4ff38; } }
+@keyframes text-particles { from { background-position: 0 0, 0 0; } to { background-position: 90px 0, -67px 0; } }
+@media (prefers-reduced-motion: reduce) { .hero h1, .strip span:first-child::after { animation: none; } .cta::before { transition: none; } }
+
 .scene .point {
   isolation: isolate;
   transition: color .3s ease, opacity .3s ease, filter .3s ease;
