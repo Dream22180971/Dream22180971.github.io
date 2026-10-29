@@ -1,81 +1,188 @@
 (() => {
   const scene = document.querySelector('.scene');
   if (!scene) return;
+
   const canvas = document.createElement('canvas');
   canvas.className = 'galaxy-canvas';
   canvas.setAttribute('aria-hidden', 'true');
-  scene.append(canvas);
   const ctx = canvas.getContext('2d');
   if (!ctx) return;
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-  let width = 0, height = 0, scale = 1, frame = 0, time = 0, visible = true, last = 0;
+  scene.append(canvas);
+
   const nodes = [...scene.querySelectorAll('.point')];
-  let orbitTime = 0, interacting = false;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  const tau = Math.PI * 2;
+  let width = 0, height = 0, scale = 1, radius = 0;
+  let stars = [], dust = [], frame = 0, last = 0, time = 0, orbit = 0;
+  let visible = true, hovered = false, focused = false, touching = false;
+  let pointerX = 0, pointerY = 0, cameraX = 0, cameraY = 0;
+  let seed = 17491;
+  const random = () => {
+    seed = (seed * 16807) % 2147483647;
+    return (seed - 1) / 2147483646;
+  };
+
   function positionNodes() {
-    const radius = Math.max(0, Math.min(width, height, 510) * .5 - (width < 500 ? 52 : 64));
     nodes.forEach((node, index) => {
-      const angle = orbitTime * .12 - Math.PI / 2 + index * Math.PI * 2 / 3;
+      const angle = orbit - Math.PI / 2 + index * tau / nodes.length;
       node.style.left = `${width / 2 + Math.cos(angle) * radius}px`;
       node.style.top = `${height / 2 + Math.sin(angle) * radius}px`;
     });
   }
-  let particles = [];
-  let seed = 17491;
-  const random = () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
+
   function resize() {
     const box = scene.getBoundingClientRect();
-    width = box.width; height = box.height; scale = Math.min(devicePixelRatio || 1, 1.5);
-    canvas.width = Math.round(width * scale); canvas.height = Math.round(height * scale);
-    canvas.style.width = width + 'px'; canvas.style.height = height + 'px';
+    width = box.width;
+    height = box.height;
+    if (!width || !height) return;
+    scale = Math.min(window.devicePixelRatio || 1, width < 500 ? 1.25 : 1.5);
+    canvas.width = Math.round(width * scale);
+    canvas.height = Math.round(height * scale);
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
+
+    const widest = Math.max(44, ...nodes.map(node => node.offsetWidth));
+    const tallest = Math.max(44, ...nodes.map(node => node.offsetHeight));
+    radius = Math.max(0, Math.min(255, (width - widest) / 2 - 8, (height - tallest) / 2 - 8));
+
     seed = 17491;
-    const count = width < 500 ? 750 : 1600;
-    particles = Array.from({length: count}, (_, i) => {
-      const radius = 0.22 + Math.pow(random(), 0.72) * 0.78;
-      const arm = i % 2 ? Math.PI : 0;
-      return { radius, angle: arm + radius * 6 + (random() - .5) * (0.7 + radius), spread: (random() - .5) * (0.08 + radius * .12), size: .35 + random() * 1.35, opacity: .18 + random() * .65, color: random() };
+    const mobile = width < 500;
+    stars = Array.from({ length: mobile ? 80 : 160 }, () => ({
+      x: random(), y: random(), size: .3 + random() * 1.1,
+      alpha: .12 + random() * .52, phase: random() * tau, depth: .3 + random() * .7
+    }));
+    dust = Array.from({ length: mobile ? 420 : 900 }, (_, i) => {
+      const distance = .1 + Math.pow(random(), .72) * .9;
+      return {
+        distance, angle: (i % 3) * tau / 3 + distance * 5.2 + (random() - .5) * (1 + distance),
+        spread: (random() - .5) * (.05 + distance * .2),
+        size: .3 + random() * 1.2, alpha: .12 + random() * .58, color: random()
+      };
     });
     positionNodes();
     draw();
   }
+
   function draw() {
+    if (!width || !height) return;
     ctx.setTransform(scale, 0, 0, scale, 0, 0);
     ctx.clearRect(0, 0, width, height);
-    const cx = width * .5, cy = height * .49, r = Math.min(width * .48, height * .46);
-    const glow = ctx.createRadialGradient(cx, cy, r * .06, cx, cy, r);
-    glow.addColorStop(0, 'rgba(223,169,145,.16)'); glow.addColorStop(.45, 'rgba(105,126,189,.11)'); glow.addColorStop(1, 'rgba(20,28,49,0)');
-    ctx.fillStyle = glow; ctx.fillRect(0, 0, width, height);
-    for (const p of particles) {
-      const angle = p.angle + time * .025 / (p.radius + .35);
-      const x = cx + Math.cos(angle) * p.radius * r;
-      const y = cy + Math.sin(angle) * p.radius * r * .42 + p.spread * r;
-      const alpha = p.opacity * (1 - p.radius * .38);
-      ctx.fillStyle = p.color < .27 ? `rgba(231,177,155,${alpha})` : p.color < .55 ? `rgba(163,193,239,${alpha})` : `rgba(235,239,255,${alpha})`;
-      ctx.beginPath(); ctx.arc(x, y, p.size, 0, Math.PI * 2); ctx.fill();
+    const cx = width / 2 + cameraX * 8;
+    const cy = height / 2 + cameraY * 6;
+    const size = Math.min(width * .49, height * .48);
+
+    const glow = ctx.createRadialGradient(cx, cy, 0, cx, cy, size);
+    glow.addColorStop(0, 'rgba(236,178,151,.22)');
+    glow.addColorStop(.28, 'rgba(125,111,156,.14)');
+    glow.addColorStop(.65, 'rgba(75,118,178,.08)');
+    glow.addColorStop(1, 'rgba(20,28,49,0)');
+    ctx.fillStyle = glow;
+    ctx.fillRect(0, 0, width, height);
+
+    for (const star of stars) {
+      const twinkle = reduced.matches ? 1 : .8 + .2 * Math.sin(time * .7 + star.phase);
+      ctx.fillStyle = `rgba(220,231,255,${star.alpha * twinkle})`;
+      ctx.beginPath();
+      ctx.arc(star.x * width + cameraX * star.depth * 5, star.y * height + cameraY * star.depth * 5, star.size, 0, tau);
+      ctx.fill();
+    }
+
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(-.24);
+    for (const particle of dust) {
+      const angle = particle.angle + time * .018 / (particle.distance + .4);
+      const x = Math.cos(angle) * particle.distance * size;
+      const y = (Math.sin(angle) * particle.distance * .4 + particle.spread) * size;
+      const alpha = particle.alpha * (1 - particle.distance * .35);
+      ctx.fillStyle = particle.color < .26 ? `rgba(238,185,162,${alpha})` : particle.color < .58 ? `rgba(164,196,246,${alpha})` : `rgba(236,239,255,${alpha})`;
+      ctx.beginPath();
+      ctx.arc(x, y, particle.size, 0, tau);
+      ctx.fill();
+    }
+    ctx.restore();
+
+    // The links remain real DOM anchors; the orbit is purely decorative.
+    if (radius > 0) {
+      ctx.beginPath();
+      ctx.arc(width / 2, height / 2, radius, 0, tau);
+      ctx.strokeStyle = 'rgba(193,207,231,.2)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
     }
   }
+
   function tick(now) {
-    if (!visible || reduced.matches || document.hidden) { frame = 0; return; }
-    if (last) {
-      const delta = Math.min((now - last) / 1000, .05);
-      time += delta;
-      if (!interacting) orbitTime += delta;
+    if (!visible || reduced.matches || document.hidden) {
+      frame = 0;
+      last = 0;
+      return;
     }
-    last = now; positionNodes(); draw(); frame = requestAnimationFrame(tick);
+    const delta = last ? Math.min((now - last) / 1000, .05) : 0;
+    last = now;
+    time += delta;
+    if (!hovered && !focused && !touching) {
+      orbit += delta * .035;
+      positionNodes();
+    }
+    const easing = 1 - Math.exp(-delta * 3);
+    cameraX += (pointerX - cameraX) * easing;
+    cameraY += (pointerY - cameraY) * easing;
+    draw();
+    frame = requestAnimationFrame(tick);
   }
+
   function sync() {
     if (frame) cancelAnimationFrame(frame);
-    frame = 0; last = 0; draw();
+    frame = 0;
+    last = 0;
+    if (reduced.matches) {
+      pointerX = pointerY = cameraX = cameraY = 0;
+      positionNodes();
+      draw();
+    }
     if (visible && !reduced.matches && !document.hidden) frame = requestAnimationFrame(tick);
   }
-  nodes.forEach(node => {
-    node.addEventListener('pointerenter', () => { interacting = true; });
-    node.addEventListener('pointerleave', () => { interacting = false; });
+
+  scene.addEventListener('pointerenter', event => {
+    if (event.pointerType !== 'touch') hovered = true;
   });
-  scene.addEventListener('focusin', () => { interacting = true; });
-  scene.addEventListener('focusout', event => { if (!scene.contains(event.relatedTarget)) interacting = false; });
-  new ResizeObserver(resize).observe(scene);
-  new IntersectionObserver(entries => { visible = entries[0].isIntersecting; sync(); }).observe(scene);
-  reduced.addEventListener('change', sync);
+  scene.addEventListener('pointermove', event => {
+    if (event.pointerType === 'touch' || reduced.matches) return;
+    const box = scene.getBoundingClientRect();
+    pointerX = (event.clientX - box.left) / box.width - .5;
+    pointerY = (event.clientY - box.top) / box.height - .5;
+  });
+  scene.addEventListener('pointerleave', () => {
+    hovered = false;
+    pointerX = pointerY = 0;
+  });
+  scene.addEventListener('pointerdown', event => {
+    if (event.pointerType === 'touch') touching = true;
+  });
+  window.addEventListener('pointerup', () => { touching = false; });
+  window.addEventListener('pointercancel', () => { touching = false; });
+  scene.addEventListener('focusin', () => { focused = true; });
+  scene.addEventListener('focusout', event => {
+    if (!scene.contains(event.relatedTarget)) focused = false;
+  });
+
+  if ('ResizeObserver' in window) new ResizeObserver(resize).observe(scene);
+  else window.addEventListener('resize', resize);
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(entries => {
+      visible = entries[0].isIntersecting;
+      sync();
+    }).observe(scene);
+  }
+  // Translation can change the links' widths without changing the scene's size.
+  if ('MutationObserver' in window) {
+    const observer = new MutationObserver(resize);
+    nodes.forEach(node => observer.observe(node, { childList: true, characterData: true, subtree: true }));
+  }
+  if (reduced.addEventListener) reduced.addEventListener('change', sync);
+  else reduced.addListener(sync);
   document.addEventListener('visibilitychange', sync);
-  resize(); sync();
+  resize();
+  sync();
 })();
