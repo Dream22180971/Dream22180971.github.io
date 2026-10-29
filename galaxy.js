@@ -9,6 +9,16 @@
   if (!ctx) return;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   let width = 0, height = 0, scale = 1, frame = 0, time = 0, visible = true, last = 0;
+  const nodes = [...scene.querySelectorAll('.point')];
+  let orbitTime = 0, interacting = false;
+  function positionNodes() {
+    const radius = Math.max(0, Math.min(width, height, 510) * .5 - (width < 500 ? 52 : 64));
+    nodes.forEach((node, index) => {
+      const angle = orbitTime * .055 - Math.PI / 2 + index * Math.PI * 2 / 3;
+      node.style.left = `${width / 2 + Math.cos(angle) * radius}px`;
+      node.style.top = `${height / 2 + Math.sin(angle) * radius}px`;
+    });
+  }
   let particles = [];
   let seed = 17491;
   const random = () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
@@ -24,6 +34,7 @@
       const arm = i % 2 ? Math.PI : 0;
       return { radius, angle: arm + radius * 6 + (random() - .5) * (0.7 + radius), spread: (random() - .5) * (0.08 + radius * .12), size: .35 + random() * 1.35, opacity: .18 + random() * .65, color: random() };
     });
+    positionNodes();
     draw();
   }
   function draw() {
@@ -44,14 +55,22 @@
   }
   function tick(now) {
     if (!visible || reduced.matches || document.hidden) { frame = 0; return; }
-    if (last) time += Math.min((now - last) / 1000, .05);
-    last = now; draw(); frame = requestAnimationFrame(tick);
+    if (last) {
+      const delta = Math.min((now - last) / 1000, .05);
+      time += delta;
+      if (!interacting) orbitTime += delta;
+    }
+    last = now; positionNodes(); draw(); frame = requestAnimationFrame(tick);
   }
   function sync() {
     if (frame) cancelAnimationFrame(frame);
     frame = 0; last = 0; draw();
     if (visible && !reduced.matches && !document.hidden) frame = requestAnimationFrame(tick);
   }
+  scene.addEventListener('pointerenter', () => { interacting = true; });
+  scene.addEventListener('pointerleave', () => { interacting = false; });
+  scene.addEventListener('focusin', () => { interacting = true; });
+  scene.addEventListener('focusout', event => { if (!scene.contains(event.relatedTarget)) interacting = false; });
   new ResizeObserver(resize).observe(scene);
   new IntersectionObserver(entries => { visible = entries[0].isIntersecting; sync(); }).observe(scene);
   reduced.addEventListener('change', sync);
