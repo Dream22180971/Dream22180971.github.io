@@ -68,15 +68,15 @@
     seed = 17491;
     const mobile = width < 500;
     stars = Array.from({ length: mobile ? 80 : 160 }, () => ({
-      x: random(), y: random(), size: .3 + random() * 1.1,
-      alpha: .12 + random() * .52, phase: random() * tau, depth: .3 + random() * .7
+      x: random(), y: random(), size: .25 + random() * .8,
+      alpha: .1 + random() * .42, phase: random() * tau, depth: .3 + random() * .7
     }));
     dust = Array.from({ length: mobile ? 420 : 900 }, (_, i) => {
       const distance = .1 + Math.pow(random(), .72) * .9;
       return {
         distance, angle: (i % 3) * tau / 3 + distance * 5.2 + (random() - .5) * (1 + distance),
         spread: (random() - .5) * (.05 + distance * .2),
-        size: .3 + random() * 1.2, alpha: .12 + random() * .58, color: random()
+        size: .2 + random() * .75, alpha: .1 + random() * .45, color: random()
       };
     });
     positionNodes();
@@ -111,7 +111,7 @@
     ctx.translate(cx, cy);
     ctx.rotate(-.24);
     for (const particle of dust) {
-      const angle = particle.angle + time * .018 / (particle.distance + .4);
+      const angle = particle.angle + time * .065 / (particle.distance + .4);
       const x = Math.cos(angle) * particle.distance * size;
       const y = (Math.sin(angle) * particle.distance * .4 + particle.spread) * size;
       const alpha = particle.alpha * (1 - particle.distance * .35);
@@ -142,7 +142,7 @@
     last = now;
     time += delta;
     if (!hovered && !focused && !touching) {
-      orbit += delta * .035;
+      orbit += delta * .075;
       positionNodes();
     }
     const easing = 1 - Math.exp(-delta * 3);
@@ -164,8 +164,9 @@
     if (visible && !reduced.matches && !document.hidden) frame = requestAnimationFrame(tick);
   }
 
-  scene.addEventListener('pointerenter', event => {
-    if (event.pointerType !== 'touch') hovered = true;
+  nodes.forEach(node => {
+    node.addEventListener('pointerenter', event => { if (event.pointerType !== 'touch') hovered = true; });
+    node.addEventListener('pointerleave', () => { hovered = false; });
   });
   scene.addEventListener('pointermove', event => {
     if (event.pointerType === 'touch' || reduced.matches) return;
