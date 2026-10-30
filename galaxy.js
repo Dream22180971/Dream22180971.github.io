@@ -132,17 +132,20 @@
       const progress = (time - ripple.start) / 1.1;
       if (progress < 0 || progress >= 1) continue;
       const fade = (1 - progress) * (1 - progress);
-      ctx.strokeStyle = `rgba(236,196,177,${fade * .65})`;
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.arc(ripple.x, ripple.y, 8 + progress * 65, 0, tau);
-      ctx.stroke();
-      for (let i = 0; i < 8; i++) {
-        const angle = i * tau / 8 + .2;
-        const distance = 10 + progress * (28 + i * 3);
-        ctx.fillStyle = `rgba(229,222,242,${fade * .8})`;
+      for (let i = 0; i < 7; i++) {
+        const angle = i * tau / 7 + .2;
+        const distance = 14 + progress * (30 + i * 3);
+        const x = ripple.x + Math.cos(angle) * distance;
+        const y = ripple.y + Math.sin(angle) * distance;
+        ctx.strokeStyle = `rgba(190,208,240,${fade * .5})`;
+        ctx.lineWidth = 1;
         ctx.beginPath();
-        ctx.arc(ripple.x + Math.cos(angle) * distance, ripple.y + Math.sin(angle) * distance, 1.2 * fade, 0, tau);
+        ctx.moveTo(ripple.x, ripple.y);
+        ctx.lineTo(x, y);
+        ctx.stroke();
+        ctx.fillStyle = `rgba(242,222,207,${fade * .9})`;
+        ctx.beginPath();
+        ctx.arc(x, y, 1.6, 0, tau);
         ctx.fill();
       }
     }
