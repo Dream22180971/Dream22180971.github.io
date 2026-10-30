@@ -34,6 +34,7 @@
   const tau = Math.PI * 2;
   let width = 0, height = 0, scale = 1, radius = 0;
   let stars = [], dust = [], frame = 0, last = 0, time = 0, orbit = 0;
+  let ripples = [];
   let visible = true, hovered = false, focused = false, touching = false;
   let pointerX = 0, pointerY = 0, cameraX = 0, cameraY = 0;
   let seed = 17491;
@@ -98,12 +99,18 @@
     glow.addColorStop(1, 'rgba(20,28,49,0)');
     ctx.fillStyle = glow;
     ctx.fillRect(0, 0, width, height);
+    const nebula = ctx.createRadialGradient(cx + size * .3, cy - size * .18, 0, cx + size * .3, cy - size * .18, size * .65);
+    nebula.addColorStop(0, 'rgba(133,156,216,.10)');
+    nebula.addColorStop(.55, 'rgba(165,126,167,.05)');
+    nebula.addColorStop(1, 'rgba(20,28,49,0)');
+    ctx.fillStyle = nebula;
+    ctx.fillRect(0, 0, width, height);
 
     for (const star of stars) {
       const twinkle = reduced.matches ? 1 : .8 + .2 * Math.sin(time * .7 + star.phase);
       ctx.fillStyle = `rgba(220,231,255,${star.alpha * twinkle})`;
       ctx.beginPath();
-      ctx.arc(star.x * width + cameraX * star.depth * 5, star.y * height + cameraY * star.depth * 5, star.size, 0, tau);
+      ctx.arc(star.x * width + cameraX * star.depth * 12, star.y * height + cameraY * star.depth * 12, star.size, 0, tau);
       ctx.fill();
     }
 
@@ -121,6 +128,24 @@
       ctx.fill();
     }
     ctx.restore();
+    for (const ripple of ripples) {
+      const progress = (time - ripple.start) / 1.1;
+      if (progress < 0 || progress >= 1) continue;
+      const fade = (1 - progress) * (1 - progress);
+      ctx.strokeStyle = `rgba(236,196,177,${fade * .65})`;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.arc(ripple.x, ripple.y, 8 + progress * 65, 0, tau);
+      ctx.stroke();
+      for (let i = 0; i < 8; i++) {
+        const angle = i * tau / 8 + .2;
+        const distance = 10 + progress * (28 + i * 3);
+        ctx.fillStyle = `rgba(229,222,242,${fade * .8})`;
+        ctx.beginPath();
+        ctx.arc(ripple.x + Math.cos(angle) * distance, ripple.y + Math.sin(angle) * distance, 1.2 * fade, 0, tau);
+        ctx.fill();
+      }
+    }
 
     // The links remain real DOM anchors; the orbit is purely decorative.
     if (radius > 0) {
@@ -141,6 +166,7 @@
     const delta = last ? Math.min((now - last) / 1000, .05) : 0;
     last = now;
     time += delta;
+    while (ripples.length && time - ripples[0].start >= 1.1) ripples.shift();
     if (!hovered && !focused && !touching) {
       orbit += delta * .075;
       positionNodes();
@@ -179,6 +205,11 @@
     pointerX = pointerY = 0;
   });
   scene.addEventListener('pointerdown', event => {
+    if (!reduced.matches && !event.target.closest('a')) {
+      const box = scene.getBoundingClientRect();
+      if (ripples.length >= 4) ripples.shift();
+      ripples.push({ x: event.clientX - box.left, y: event.clientY - box.top, start: time });
+    }
     if (event.pointerType === 'touch') touching = true;
   });
   window.addEventListener('pointerup', () => { touching = false; });

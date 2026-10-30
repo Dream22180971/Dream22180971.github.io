@@ -258,3 +258,5 @@ footer a:hover { color: #f0c0a9; }
 }
 @media (max-width:760px) { #spaces.discovery { gap: 0; } .discovery-copy { display: block; padding-top: 22px; } .discovery h2 { margin: 16px 0; white-space: normal; } .discovery-intro { margin-top: 0; } .discovery-visual img { aspect-ratio: 16 / 10; } .discovery-actions { justify-content: flex-start; flex-wrap: wrap; margin-top: 20px; } }
 @media (prefers-reduced-motion:reduce) { .discovery-visual img { transition: none; } .discovery-visual:hover img, .discovery-visual:focus-visible img { transform: none; } }
+
+.scene .core { box-shadow: inset -18px -20px 35px #0c1223a8, 0 0 0 1px #e6cabd44, 0 0 28px #ddae9b55, 0 0 85px #7f94bf35; }
