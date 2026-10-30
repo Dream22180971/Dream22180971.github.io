@@ -34,7 +34,6 @@
   const tau = Math.PI * 2;
   let width = 0, height = 0, scale = 1, radius = 0;
   let stars = [], dust = [], frame = 0, last = 0, time = 0, orbit = 0;
-  let ripples = [];
   let visible = true, hovered = false, focused = false, touching = false;
   let pointerX = 0, pointerY = 0, cameraX = 0, cameraY = 0;
   let seed = 17491;
@@ -128,27 +127,6 @@
       ctx.fill();
     }
     ctx.restore();
-    for (const ripple of ripples) {
-      const progress = (time - ripple.start) / 1.1;
-      if (progress < 0 || progress >= 1) continue;
-      const fade = (1 - progress) * (1 - progress);
-      for (let i = 0; i < 7; i++) {
-        const angle = i * tau / 7 + .2;
-        const distance = 14 + progress * (30 + i * 3);
-        const x = ripple.x + Math.cos(angle) * distance;
-        const y = ripple.y + Math.sin(angle) * distance;
-        ctx.strokeStyle = `rgba(190,208,240,${fade * .5})`;
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(ripple.x, ripple.y);
-        ctx.lineTo(x, y);
-        ctx.stroke();
-        ctx.fillStyle = `rgba(242,222,207,${fade * .9})`;
-        ctx.beginPath();
-        ctx.arc(x, y, 1.6, 0, tau);
-        ctx.fill();
-      }
-    }
 
     // The links remain real DOM anchors; the orbit is purely decorative.
     if (radius > 0) {
@@ -169,7 +147,6 @@
     const delta = last ? Math.min((now - last) / 1000, .05) : 0;
     last = now;
     time += delta;
-    while (ripples.length && time - ripples[0].start >= 1.1) ripples.shift();
     if (!hovered && !focused && !touching) {
       orbit += delta * .075;
       positionNodes();
@@ -208,11 +185,6 @@
     pointerX = pointerY = 0;
   });
   scene.addEventListener('pointerdown', event => {
-    if (!reduced.matches && !event.target.closest('a')) {
-      const box = scene.getBoundingClientRect();
-      if (ripples.length >= 4) ripples.shift();
-      ripples.push({ x: event.clientX - box.left, y: event.clientY - box.top, start: time });
-    }
     if (event.pointerType === 'touch') touching = true;
   });
   window.addEventListener('pointerup', () => { touching = false; });

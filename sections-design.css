@@ -260,7 +260,9 @@ footer a:hover { color: #f0c0a9; }
 @media (prefers-reduced-motion:reduce) { .discovery-visual img { transition: none; } .discovery-visual:hover img, .discovery-visual:focus-visible img { transform: none; } }
 
 .scene .core { box-shadow: inset -18px -20px 35px #0c1223a8, 0 0 0 1px #e6cabd44, 0 0 28px #ddae9b55, 0 0 85px #7f94bf35; }
-.click-stars { position: fixed; z-index: 99; pointer-events: none; width: 1px; height: 1px; animation: star-burst .75s ease-out forwards; }
-.click-stars span { position: absolute; width: 5px; height: 5px; background: #f2d4c2; box-shadow: 0 0 9px #e8b8a0; clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); transform: rotate(var(--angle)) translateY(-24px); }
-@keyframes star-burst { from { opacity: 1; transform: scale(.2); } to { opacity: 0; transform: scale(1.5); } }
+.click-stars { position: fixed; z-index: 9999; pointer-events: none; width: 1px; height: 1px; animation: star-burst 1.1s ease-out forwards; }
+.click-stars span { position: absolute; width: 10px; height: 10px; background: #fbe7d6; filter: drop-shadow(0 0 5px #e8b8a0); clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); transform: rotate(var(--angle)) translateY(calc(-1 * var(--distance))); }
+.click-constellation span { width: var(--distance); height: 1px; clip-path: none; transform-origin: left center; transform: rotate(var(--angle)); background: linear-gradient(90deg, #eec8ba88, #adcbffdd); filter: drop-shadow(0 0 4px #9abaff); }
+.click-constellation span::after { content: ''; position: absolute; right: -3px; top: -3px; width: 7px; height: 7px; border-radius: 50%; background: #fff3e7; box-shadow: 0 0 10px 3px #b7caffaa; }
+@keyframes star-burst { 0% { opacity: 0; transform: scale(.1); } 18% { opacity: 1; } 75% { opacity: .8; } 100% { opacity: 0; transform: scale(1); } }
 @media (prefers-reduced-motion: reduce) { .click-stars { display: none; animation: none; } }
